@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { useState } from 'react';
 
 // Hardcoded list of 77 provinces of Thailand
 const provinces = [
@@ -23,7 +22,6 @@ const App = () => {
   const [jobDetails, setJobDetails] = useState([]);
   // State to show success message after final submission
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const formRef = useRef(null);
 
   // Component for the disclaimer page
   const DisclaimerPage = () => (
@@ -370,7 +368,7 @@ const App = () => {
   };
 
   const SubmissionSuccess = () => (
-    <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 text-center animate-fade-in">
+    <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
       <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">ส่งข้อมูลเรียบร้อยแล้ว!</h2>
       <p className="text-lg text-gray-700 mb-6">
         เจ้าหน้าที่กำลังดำเนินการตรวจสอบข้อมูลของคุณ ก่อนเพิ่มในหน้าค้นหางานประมูล
@@ -411,3 +409,6 @@ const App = () => {
 };
 
 export default App;
+
+export default App;
+
