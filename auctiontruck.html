@@ -40,6 +40,44 @@
       "หนองบัวลำภู", "อ่างทอง", "อำนาจเจริญ", "อุดรธานี", "อุตรดิตถ์", "อุทัยธานี", "อุบลราชธานี"
     ];
 
+    // InputField and SelectField components are moved outside to prevent re-creation on every render
+    const InputField = ({ label, name, type = 'text', required = false, error, placeholder, value, onChange }) => (
+      <div className="mb-6">
+        <label className="block text-gray-700 text-sm font-semibold mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className={`shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 ${error ? 'border-red-500' : ''}`}
+          placeholder={placeholder}
+          required={required}
+        />
+        {error && <p className="text-red-500 text-xs italic mt-1">{error}</p>}
+      </div>
+    );
+
+    const SelectField = ({ label, name, options, required = false, value, onChange }) => (
+      <div className="mb-6">
+        <label className="block text-gray-700 text-sm font-semibold mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <select
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200"
+        >
+          <option value="">-- กรุณาเลือก --</option>
+          {options.map(option => (
+            <option key={option} value={option}>{option}</option>
+          ))}
+        </select>
+      </div>
+    );
+
     // Main App component to manage the multi-step form and data
     const App = () => {
       // State to manage the current step of the form
@@ -102,24 +140,6 @@
           }
         };
 
-        const InputField = ({ label, name, type = 'text', required = false, error, placeholder }) => (
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">
-              {label} {required && <span className="text-red-500">*</span>}
-            </label>
-            <input
-              type={type}
-              name={name}
-              value={form[name]}
-              onChange={handleChange}
-              className={`shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 ${error ? 'border-red-500' : ''}`}
-              placeholder={placeholder}
-              required={required}
-            />
-            {error && <p className="text-red-500 text-xs italic mt-1">{error}</p>}
-          </div>
-        );
-
         return (
           <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">กรอกข้อมูลผู้ติดต่อ</h2>
@@ -130,6 +150,8 @@
                 placeholder="ชื่อบริษัท"
                 required={true}
                 error={errors.companyName}
+                value={form.companyName}
+                onChange={handleChange}
               />
               <InputField
                 label="ชื่อผู้ติดต่อประสานงาน"
@@ -137,6 +159,8 @@
                 placeholder="ชื่อผู้ติดต่อ"
                 required={true}
                 error={errors.contactName}
+                value={form.contactName}
+                onChange={handleChange}
               />
               <InputField
                 label="เบอร์โทรศัพท์"
@@ -145,6 +169,8 @@
                 placeholder="เบอร์โทรศัพท์ (ตัวเลขไม่เกิน 10 หลัก)"
                 required={true}
                 error={errors.phone}
+                value={form.phone}
+                onChange={handleChange}
               />
               <InputField
                 label="E-mail"
@@ -153,6 +179,8 @@
                 placeholder="E-mail"
                 required={true}
                 error={errors.email}
+                value={form.email}
+                onChange={handleChange}
               />
               <div className="flex justify-center mt-8">
                 <button
@@ -186,7 +214,7 @@
 
         const handleChange = (e) => {
           const { name, value } = e.target;
-          setForm({ ...form, [name]: value });
+          setForm(prevForm => ({ ...prevForm, [name]: value }));
           if (message) setMessage('');
         };
 
@@ -206,8 +234,7 @@
               weight: Number(form.weight),
             };
             setJobDetails([...jobDetails, newJob]);
-            // Reset form fields after successful add
-            setForm({
+            setForm({ // Reset form fields after successful add
                 vehicleType1: '',
                 vehicleType2: '',
                 shippingType: '',
@@ -278,43 +305,6 @@
           }
         };
 
-        const SelectField = ({ label, name, options, required = false }) => (
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">
-              {label} {required && <span className="text-red-500">*</span>}
-            </label>
-            <select
-              name={name}
-              value={form[name]}
-              onChange={handleChange}
-              className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200"
-            >
-              <option value="">-- กรุณาเลือก --</option>
-              {options.map(option => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
-          </div>
-        );
-
-        const InputField = ({ label, name, type = 'text', required = false, error, placeholder }) => (
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">
-              {label} {required && <span className="text-red-500">*</span>}
-            </label>
-            <input
-              type={type}
-              name={name}
-              value={form[name]}
-              onChange={handleChange}
-              className={`shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 ${error ? 'border-red-500' : ''}`}
-              placeholder={placeholder}
-              required={required}
-            />
-            {error && <p className="text-red-500 text-xs italic mt-1">{error}</p>}
-          </div>
-        );
-
         return (
           <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">ข้อมูลการขนส่ง</h2>
@@ -323,26 +313,36 @@
                 label="ประเภทรถ 1"
                 name="vehicleType1"
                 options={['4 ล้อ', '6 ล้อ', '10 ล้อ', 'เทรลเลอร์']}
+                value={form.vehicleType1}
+                onChange={handleChange}
               />
               <SelectField
                 label="ประเภทรถ 2"
                 name="vehicleType2"
                 options={['พื้นเรียบ', 'คอก', 'ตู้', 'ตู้เย็น']}
+                value={form.vehicleType2}
+                onChange={handleChange}
               />
               <SelectField
                 label="ประเภทการขนส่ง"
                 name="shippingType"
                 options={['เหมาเที่ยว', 'กระจายสินค้า', 'Express', 'Cross border']}
+                value={form.shippingType}
+                onChange={handleChange}
               />
               <SelectField
                 label="ต้นทาง (จังหวัด)"
                 name="origin"
                 options={provinces}
+                value={form.origin}
+                onChange={handleChange}
               />
               <SelectField
                 label="ปลายทาง (จังหวัด)"
                 name="destination"
                 options={provinces}
+                value={form.destination}
+                onChange={handleChange}
               />
               <InputField
                 label="ประเภทสินค้า"
@@ -350,6 +350,8 @@
                 placeholder="สินค้าทั่วไป, เครื่องจักร, ฯลฯ"
                 required={true}
                 error={errors.productType}
+                value={form.productType}
+                onChange={handleChange}
               />
               <InputField
                 label="น้ำหนักสินค้า (กิโลกรัม)"
@@ -358,6 +360,8 @@
                 placeholder="เป็นตัวเลขเท่านั้น"
                 required={true}
                 error={errors.weight}
+                value={form.weight}
+                onChange={handleChange}
               />
               <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-semibold mb-2">
@@ -438,7 +442,7 @@
 
       return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 font-inter antialiased">
-          <div className="p-6 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-8 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
+          <div className="p-6 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-4 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
               <div className="text-center">
                   <h1 className="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">ฝากโพสประมูลงาน</h1>
                   <p className="text-lg md:text-xl font-semibold text-green-700">ฝากประะมูลงานขนส่งกับผู้รับเหมาทั่วประเทศ ผ่าน บริษัท เอส เอส แอล โลจิสติกส์ ได้ทีนี่</p>
@@ -459,4 +463,6 @@
   </script>
 </body>
 </html>
+
+
 
