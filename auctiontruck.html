@@ -8,6 +8,7 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
@@ -19,9 +20,12 @@
     .min-h-screen {
         min-height: 100vh;
     }
+    body {
+        font-family: 'Kanit', sans-serif;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-emerald-100 font-inter antialiased">
+<body class="bg-gradient-to-br from-green-50 to-emerald-100 antialiased">
 
   <div id="root"></div>
 
@@ -93,7 +97,7 @@
       const DisclaimerPage = () => (
         <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
           <p className="text-sm md:text-base text-gray-700 leading-relaxed text-justify mb-8">
-            บริษัท เอสเอสแอล โลจิสติกส์ จำกัด ("บริษัทฯ") ทำหน้าที่เป็นเพียง ตัวกลาง ในการประสานงานและส่งต่อข้อเสนอราคาค่าขนส่งระหว่างผู้ยื่นประมูลกับบริษัทต้นทางเท่านั้น บริษัทฯ ไม่ได้เป็นคู่สัญญาในงานขนส่ง การอนุมัติและคัดเลือกราคาค่าขนส่งทั้งหมดเป็นดุลยพินิจของบริษัทต้นทางแต่เพียงผู้เดียว ดังนั้น บริษัทฯ จะไม่รับผิดชอบต่อความเสียหาย ค่าใช้จ่าย หรือหนี้สินใด ๆ ที่เกิดขึ้นจากการขนส่ง ทั้งนี้ บริษัทฯ ขอเรียกเก็บเฉพาะ ค่าดำเนินการ สำหรับการอำนวยความสะดวกในการรับส่งข้อมูลเพื่อประกอบการประเมินเท่านั้น
+            บริษัท เอสเอสแอล โลจิสติกส์ จำกัด ("บริษัทฯ") ทำหน้าที่เป็นเพียง ตัวกลาง ในการประสานงานและส่งต่อข้อเสนอราคาค่าขนส่งระหว่างผู้ยื่นประมูลกับบริษัทต้นทางเท่านั้น บริษัทฯ ไม่ได้เป็นคู่สัญญาในงานขนส่ง การอนุมัติและคัดเลือกราคาค่าขนส่งทั้งหมดเป็นดุลยพินิจของบริษัทต้นทางแต่เพียงผู้เดียว ดังนั้น บริษัทฯ จะไม่รับผิดชอบต่อความเสียหาย ค่าใช้จ่าย หรือหนี้สินใด ๆ ที่เกิดขึ้นจากการขนส่งเป็นความรับผิดชอบของผู้ได้สัญญาขนส่งแต่เพียงผู้เดียว
           </p>
           <button
             onClick={() => setCurrentPage('contact')}
@@ -441,11 +445,11 @@
       );
 
       return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 font-inter antialiased">
-          <div className="p-6 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-4 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 font-kanit antialiased">
+          <div className="p-6 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-2 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
               <div className="text-center">
                   <h1 className="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">ฝากโพสประมูลงาน</h1>
-                  <p className="text-lg md:text-xl font-semibold text-green-700">ฝากประะมูลงานขนส่งกับผู้รับเหมาทั่วประเทศ ผ่าน บริษัท เอส เอส แอล โลจิสติกส์ ได้ทีนี่</p>
+                  <p className="text-lg md:text-xl font-semibold text-green-700">ฝากประมูลงานขนส่งกับผู้รับเหมาทั่วประเทศ ผ่าน บริษัท เอส เอส แอล โลจิสติกส์ ได้ทีนี่</p>
               </div>
           </div>
           <div className="container mx-auto p-4">
@@ -463,6 +467,7 @@
   </script>
 </body>
 </html>
+
 
 
 
