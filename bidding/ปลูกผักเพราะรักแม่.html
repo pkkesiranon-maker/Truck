@@ -7,10 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Sarabun', sans-serif;
+            font-family: 'Kanit', sans-serif;
         }
         .step {
             display: none;
@@ -20,71 +20,77 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-green-50 text-gray-800 leading-relaxed">
 
     <div class="container mx-auto p-4 sm:p-6 md:p-8">
         <!-- Header -->
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-800">ร่วมประมูลงานขนส่ง</h1>
-            <p class="text-lg md:text-xl text-gray-600 mt-2">ประมูลงานขนส่ง บริษัท ปลูกผักเพราะรักแม่ จำกัด ผ่านบริษัท เอส เอส แอล โลจิสติกส์</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-green-800 tracking-wide">ร่วมประมูลงานขนส่ง</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2 tracking-wide">ประมูลงานขนส่ง บริษัท ปลูกผักเพราะรักแม่ จำกัด ผ่านบริษัท เอส เอส แอล โลจิสติกส์</p>
         </header>
 
         <div id="auction-form-container" class="bg-white p-6 rounded-lg shadow-md">
             <!-- Step 1: Auction Conditions -->
             <section id="step-1" class="step active">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">เงื่อนไขการประมูล</h2>
-                <div class="prose max-w-none text-gray-700">
-                    <p>เพื่อให้การประมูลเป็นไปอย่างเรียบร้อยและยุติธรรม ผู้เข้าร่วมทุกท่านโปรดอ่านและยอมรับเงื่อนไขดังต่อไปนี้:</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>ผู้เข้าร่วมประมูลต้องกรอกข้อมูลที่เป็นจริงและสามารถตรวจสอบได้</li>
-                        <li>การเสนอราคาต้องเป็นตัวเลขเท่านั้น และมีหน่วยเป็นบาทไทย (THB)</li>
-                        <li>ผู้ชนะการประมูลจะได้รับการติดต่อกลับจากเจ้าหน้าที่ภายใน 24 ชั่วโมงหลังสิ้นสุดการประมูล</li>
-                        <li>บริษัทฯ ขอสงวนสิทธิ์ในการยกเลิกหรือเปลี่ยนแปลงการประมูลโดยไม่ต้องแจ้งให้ทราบล่วงหน้า</li>
-                        <li>การตัดสินของบริษัท เอส เอส แอล โลจิสติกส์ ถือเป็นที่สิ้นสุด</li>
-                        <li>ราคาที่เสนอเป็นราคาสุทธิ ไม่รวมภาษีมูลค่าเพิ่ม (VAT 7%)</li>
-                    </ul>
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-green-700">เงื่อนไขการประมูล</h2>
+                <div class="prose max-w-none text-gray-700 space-y-4">
+                    <p class="text-justify">
+                        บริษัท เอสเอสแอล โลจิสติกส์ จำกัด ("บริษัทฯ") ทำหน้าที่เป็นเพียง <strong>ตัวกลาง</strong> ในการประสานงานและส่งต่อข้อเสนอราคาค่าขนส่งระหว่างผู้ยื่นประมูลกับบริษัทต้นทางเท่านั้น
+                    </p>
+                    <p class="text-justify">
+                        บริษัทฯ ไม่ได้เป็นคู่สัญญาในงานขนส่ง การอนุมัติและคัดเลือกราคาค่าขนส่งทั้งหมดเป็นดุลยพินิจของบริษัทต้นทางแต่เพียงผู้เดียว ดังนั้น บริษัทฯ จะไม่รับผิดชอบต่อความเสียหาย ค่าใช้จ่าย หรือหนี้สินใด ๆ ที่เกิดขึ้นจากการขนส่ง
+                    </p>
+                    <p class="text-justify">
+                        ทั้งนี้ บริษัทฯ ขอเรียกเก็บเฉพาะ <strong>ค่าดำเนินการ</strong> สำหรับการอำนวยความสะดวกในการรับส่งข้อมูลเพื่อประกอบการประเมินเท่านั้น
+                    </p>
+                    <p class="text-justify">
+                        โดยคิดค่าดำเนินการประมูล <strong>ประเภท 4 ล้อ เส้นทางละ 100 บาท</strong>, <strong>ประเภท 6 ล้อ เส้นทางละ 150 บาท</strong>, <strong>10 ล้อ เส้นทางละ 150 บาท</strong> และ <strong>เทรลเลอร์ เส้นทางละ 200 บาท</strong>
+                    </p>
+                    <p class="text-justify">
+                        <strong>ค่าดำเนินการในการประมูล เป็นเพียงค่าธรรมเนียมในการดำเนินการ ไม่รับประกันการได้งาน</strong>
+                    </p>
                 </div>
             </section>
 
             <!-- Step 2: Bidder Information -->
             <section id="step-2" class="step">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">ข้อมูลผู้ประมูล</h2>
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-green-700">ข้อมูลผู้ประมูล</h2>
                 <form id="bidder-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล</label>
-                        <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="กรอกชื่อและนามสกุล" required>
+                        <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="กรอกชื่อและนามสกุล" required>
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์</label>
-                        <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="08xxxxxxxx" required>
+                        <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="08xxxxxxxx" required>
                     </div>
                     <div class="md:col-span-2">
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="example@email.com" required>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="example@email.com" required>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทผู้ประมูล</label>
                         <div class="flex items-center space-x-6">
                             <div class="flex items-center">
-                                <input id="type-individual" name="bidderType" type="radio" value="individual" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" checked onchange="toggleCompanyField()">
+                                <input id="type-individual" name="bidderType" type="radio" value="individual" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500" checked onchange="toggleCompanyField()">
                                 <label for="type-individual" class="ml-2 block text-sm text-gray-900">บุคคลธรรมดา</label>
                             </div>
                             <div class="flex items-center">
-                                <input id="type-corporate" name="bidderType" type="radio" value="corporate" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" onchange="toggleCompanyField()">
+                                <input id="type-corporate" name="bidderType" type="radio" value="corporate" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500" onchange="toggleCompanyField()">
                                 <label for="type-corporate" class="ml-2 block text-sm text-gray-900">นิติบุคคล</label>
                             </div>
                         </div>
                     </div>
                     <div id="companyNameContainer" class="md:col-span-2 hidden">
                         <label for="companyName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อบริษัท</label>
-                        <input type="text" id="companyName" name="companyName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="ระบุชื่อบริษัท">
+                        <input type="text" id="companyName" name="companyName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="ระบุชื่อบริษัท">
                     </div>
                 </form>
             </section>
 
             <!-- Step 3: Bidding Cards -->
             <section id="step-3" class="step">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">กรอกราคาประมูล</h2>
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-green-700">กรอกราคาประมูล</h2>
                 <div id="auction-cards-container" class="space-y-6">
                     <!-- Auction cards will be dynamically inserted here -->
                 </div>
@@ -95,7 +101,7 @@
                 <button id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg transition duration-300">
                     ย้อนกลับ
                 </button>
-                <button id="nextBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                <button id="nextBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
                     ถัดไป
                 </button>
                 <button id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 hidden">
@@ -128,18 +134,37 @@
         }
 
         function updateButtons() {
+            const navContainer = document.getElementById('navigation-buttons');
+
             if (currentStep === 1) {
                 prevBtn.style.display = 'none';
                 nextBtn.style.display = 'inline-block';
                 submitBtn.style.display = 'none';
+                
+                // Customizations for the first step
+                nextBtn.textContent = 'ยอมรับเงื่อนไข'; // Change button text
+                navContainer.classList.remove('justify-between', 'justify-end');
+                navContainer.classList.add('justify-center'); // Center the button
+
             } else if (currentStep === steps.length) {
                 prevBtn.style.display = 'inline-block';
                 nextBtn.style.display = 'none';
                 submitBtn.style.display = 'inline-block';
-            } else {
-                prevBtn.style.display = 'inline-block';
+
+                // Revert to default layout
+                nextBtn.textContent = 'ถัดไป'; // Revert text
+                navContainer.classList.remove('justify-center', 'justify-end');
+                navContainer.classList.add('justify-between');
+
+            } else { // This is Step 2
+                prevBtn.style.display = 'none'; // Hide the back button
                 nextBtn.style.display = 'inline-block';
                 submitBtn.style.display = 'none';
+
+                // Revert to default layout
+                nextBtn.textContent = 'ถัดไป'; // Revert text
+                navContainer.classList.remove('justify-between', 'justify-center');
+                navContainer.classList.add('justify-end'); // Align the single button to the right
             }
         }
 
@@ -189,7 +214,7 @@
                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm transition hover:shadow-md">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
                             <div class="md:col-span-2 space-y-3 text-gray-700">
-                                <h3 class="text-lg font-bold text-blue-800">${item.company}</h3>
+                                <h3 class="text-lg font-bold text-green-800">${item.company}</h3>
                                 <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                                     <p><strong class="font-medium text-gray-600">ประเภทรถ:</strong> ${vehicle}</p>
                                     <p><strong class="font-medium text-gray-600">การขนส่ง:</strong> ${item.jobType}</p>
@@ -200,9 +225,9 @@
                                 </div>
                                 <p class="text-sm"><strong class="font-medium text-gray-600">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</p>
                             </div>
-                            <div class="flex flex-col justify-center items-center bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <div class="flex flex-col justify-center items-center bg-green-50 p-4 rounded-lg border border-green-100">
                                 <label for="bid_price_${index + 1}" class="font-bold text-gray-800 mb-2">ราคาที่เสนอ (บาท)</label>
-                                <input type="number" id="bid_price_${index + 1}" name="bid_price_${index + 1}" class="w-full max-w-xs text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-bold" placeholder="0.00">
+                                <input type="number" id="bid_price_${index + 1}" name="bid_price_${index + 1}" class="w-full max-w-xs text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-lg font-bold" placeholder="0.00">
                             </div>
                         </div>
                     </div>
@@ -279,3 +304,21 @@
 
 </body>
 </html>
+
+            setTimeout(() => {
+                document.getElementById('auction-form-container').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                document.body.removeChild(form);
+            }, 1500);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showStep(currentStep);
+            populateAuctionCards();
+        });
+
+    </script>
+
+</body>
+</html>
+
