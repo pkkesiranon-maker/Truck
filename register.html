@@ -4,231 +4,205 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สมัครสมาชิกร่วมวิ่งงาน</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Kanit -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Using Kanit font as the default */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0fff0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 2em;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        h2 {
-            text-align: center;
-            color: #555;
-            margin: 0 auto 1.5em auto;
-            font-size: 1.5em;
-            font-weight: normal;
-        }
-        .form-group {
-            margin-bottom: 1em;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5em;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="tel"], select {
-            width: 100%;
-            padding: 0.75em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .radio-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1em;
-        }
-        .radio-group label {
-            font-weight: normal;
-        }
-        button {
-            width: 100%;
-            padding: 1em;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        hr {
-            margin: 2em 0;
-            border: 0;
-            border-top: 1px solid #eee;
-        }
-        #statusMessage {
-            text-align: center;
-            margin-top: 1em;
-            font-weight: bold;
-        }
-        .success {
-            color: green;
-        }
-        .error {
-            color: red;
+            font-family: 'Kanit', sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
 
-<div class="container">
-    <h1>สมัครสมาชิกร่วมวิ่งงาน</h1>
-    <h2>สมัครร่วมงานบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</h2>
-    
-    <form id="registrationForm">
-        
-        <!-- ส่วนที่ 1 -->
-        <div class="form-group">
-            <label for="fullName">ชื่อ-นามสกุล <span style="color: red;">*</span></label>
-            <input type="text" id="fullName" name="entry.287163873" required>
+    <div class="container bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">สมัครสมาชิกร่วมวิ่งงาน</h1>
+            <h2 class="text-lg text-gray-600 mt-2">สมัครร่วมงานบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</h2>
         </div>
         
-        <div class="form-group">
-            <label for="phone">เบอร์โทรศัพท์ <span style="color: red;">*</span></label>
-            <input type="tel" id="phone" name="entry.1929394666" required maxlength="10">
-        </div>
-        
-        <div class="form-group">
-            <label for="province">จังหวัด</label>
-            <select id="province" name="entry.1641413677">
-                <option value="">เลือกจังหวัด</option>
-                <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-                <option value="กระบี่">กระบี่</option>
-                <option value="กาญจนบุรี">กาญจนบุรี</option>
-                <option value="กาฬสินธุ์">กาฬสินธุ์</option>
-                <option value="กำแพงเพชร">กำแพงเพชร</option>
-                <option value="ขอนแก่น">ขอนแก่น</option>
-                <option value="จันทบุรี">จันทบุรี</option>
-                <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
-                <option value="ชลบุรี">ชลบุรี</option>
-                <option value="ชัยนาท">ชัยนาท</option>
-                <option value="ชัยภูมิ">ชัยภูมิ</option>
-                <option value="ชุมพร">ชุมพร</option>
-                <option value="เชียงราย">เชียงราย</option>
-                <option value="เชียงใหม่">เชียงใหม่</option>
-                <option value="ตรัง">ตรัง</option>
-                <option value="ตราด">ตราด</option>
-                <option value="ตาก">ตาก</option>
-                <option value="นครนายก">นครนายก</option>
-                <option value="นครปฐม">นครปฐม</option>
-                <option value="นครพนม">นครพนม</option>
-                <option value="นครราชสีมา">นครราชสีมา</option>
-                <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
-                <option value="นครสวรรค์">นครสวรรค์</option>
-                <option value="นนทบุรี">นนทบุรี</option>
-                <option value="นราธิวาส">นราธิวาส</option>
-                <option value="น่าน">น่าน</option>
-                <option value="บึงกาฬ">บึงกาฬ</option>
-                <option value="บุรีรัมย์">บุรีรัมย์</option>
-                <option value="ปทุมธานี">ปทุมธานี</option>
-                <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
-                <option value="ปราจีนบุรี">ปราจีนบุรี</option>
-                <option value="ปัตตานี">ปัตตานี</option>
-                <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
-                <option value="พะเยา">พะเยา</option>
-                <option value="พังงา">พังงา</option>
-                <option value="พัทลุง">พัทลุง</option>
-                <option value="พิจิตร">พิจิตร</option>
-                <option value="พิษณุโลก">พิษณุโลก</option>
-                <option value="เพชรบุรี">เพชรบุรี</option>
-                <option value="เพชรบูรณ์">เพชรบูรณ์</option>
-                <option value="แพร่">แพร่</option>
-                <option value="ภูเก็ต">ภูเก็ต</option>
-                <option value="มหาสารคาม">มหาสารคาม</option>
-                <option value="มุกดาหาร">มุกดาหาร</option>
-                <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
-                <option value="ยโสธร">ยโสธร</option>
-                <option value="ยะลา">ยะลา</option>
-                <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
-                <option value="ระนอง">ระนอง</option>
-                <option value="ระยอง">ระยอง</option>
-                <option value="ราชบุรี">ราชบุรี</option>
-                <option value="ลพบุรี">ลพบุรี</option>
-                <option value="ลำปาง">ลำปาง</option>
-                <option value="ลำพูน">ลำพูน</option>
-                <option value="เลย">เลย</option>
-                <option value="ศรีสะเกษ">ศรีสะเกษ</option>
-                <option value="สกลนคร">สกลนคร</option>
-                <option value="สงขลา">สงขลา</option>
-                <option value="สตูล">สตูล</option>
-                <option value="สมุทรปราการ">สมุทรปราการ</option>
-                <option value="สมุทรสงคราม">สมุทรสงคราม</option>
-                <option value="สมุทรสาคร">สมุทรสาคร</option>
-                <option value="สระแก้ว">สระแก้ว</option>
-                <option value="สระบุรี">สระบุรี</option>
-                <option value="สิงห์บุรี">สิงห์บุรี</option>
-                <option value="สุโขทัย">สุโขทัย</option>
-                <option value="สุพรรณบุรี">สุพรรณบุรี</option>
-                <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
-                <option value="สุรินทร์">สุรินทร์</option>
-                <option value="หนองคาย">หนองคาย</option>
-                <option value="หนองบัวลำภู">หนองบัวลำภู</option>
-                <option value="อ่างทอง">อ่างทอง</option>
-                <option value="อำนาจเจริญ">อำนาจเจริญ</option>
-                <option value="อุดรธานี">อุดรธานี</option>
-                <option value="อุตรดิตถ์">อุตรดิตถ์</option>
-                <option value="อุทัยธานี">อุทัยธานี</option>
-                <option value="อุบลราชธานี">อุบลราชธานี</option>
-            </select>
-        </div>
+        <form id="registrationForm" class="space-y-6">
+            
+            <!-- Section 1: Personal Information -->
+            <fieldset>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="form-group">
+                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                        <input type="text" id="fullName" name="entry.287163873" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+                        <input type="tel" id="phone" name="entry.1929394666" required maxlength="10" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    </div>
+                </div>
 
-        <hr>
+                <div class="form-group mt-6">
+                    <label for="province" class="block text-sm font-medium text-gray-700 mb-1">จังหวัด</label>
+                    <select id="province" name="entry.1641413677" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white">
+                        <option value="">เลือกจังหวัด</option>
+                        <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
+                        <option value="กระบี่">กระบี่</option>
+                        <option value="กาญจนบุรี">กาญจนบุรี</option>
+                        <option value="กาฬสินธุ์">กาฬสินธุ์</option>
+                        <option value="กำแพงเพชร">กำแพงเพชร</option>
+                        <option value="ขอนแก่น">ขอนแก่น</option>
+                        <option value="จันทบุรี">จันทบุรี</option>
+                        <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
+                        <option value="ชลบุรี">ชลบุรี</option>
+                        <option value="ชัยนาท">ชัยนาท</option>
+                        <option value="ชัยภูมิ">ชัยภูมิ</option>
+                        <option value="ชุมพร">ชุมพร</option>
+                        <option value="เชียงราย">เชียงราย</option>
+                        <option value="เชียงใหม่">เชียงใหม่</option>
+                        <option value="ตรัง">ตรัง</option>
+                        <option value="ตราด">ตราด</option>
+                        <option value="ตาก">ตาก</option>
+                        <option value="นครนายก">นครนายก</option>
+                        <option value="นครปฐม">นครปฐม</option>
+                        <option value="นครพนม">นครพนม</option>
+                        <option value="นครราชสีมา">นครราชสีมา</option>
+                        <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+                        <option value="นครสวรรค์">นครสวรรค์</option>
+                        <option value="นนทบุรี">นนทบุรี</option>
+                        <option value="นราธิวาส">นราธิวาส</option>
+                        <option value="น่าน">น่าน</option>
+                        <option value="บึงกาฬ">บึงกาฬ</option>
+                        <option value="บุรีรัมย์">บุรีรัมย์</option>
+                        <option value="ปทุมธานี">ปทุมธานี</option>
+                        <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
+                        <option value="ปราจีนบุรี">ปราจีนบุรี</option>
+                        <option value="ปัตตานี">ปัตตานี</option>
+                        <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
+                        <option value="พะเยา">พะเยา</option>
+                        <option value="พังงา">พังงา</option>
+                        <option value="พัทลุง">พัทลุง</option>
+                        <option value="พิจิตร">พิจิตร</option>
+                        <option value="พิษณุโลก">พิษณุโลก</option>
+                        <option value="เพชรบุรี">เพชรบุรี</option>
+                        <option value="เพชรบูรณ์">เพชรบูรณ์</option>
+                        <option value="แพร่">แพร่</option>
+                        <option value="ภูเก็ต">ภูเก็ต</option>
+                        <option value="มหาสารคาม">มหาสารคาม</option>
+                        <option value="มุกดาหาร">มุกดาหาร</option>
+                        <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
+                        <option value="ยโสธร">ยโสธร</option>
+                        <option value="ยะลา">ยะลา</option>
+                        <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
+                        <option value="ระนอง">ระนอง</option>
+                        <option value="ระยอง">ระยอง</option>
+                        <option value="ราชบุรี">ราชบุรี</option>
+                        <option value="ลพบุรี">ลพบุรี</option>
+                        <option value="ลำปาง">ลำปาง</option>
+                        <option value="ลำพูน">ลำพูน</option>
+                        <option value="เลย">เลย</option>
+                        <option value="ศรีสะเกษ">ศรีสะเกษ</option>
+                        <option value="สกลนคร">สกลนคร</option>
+                        <option value="สงขลา">สงขลา</option>
+                        <option value="สตูล">สตูล</option>
+                        <option value="สมุทรปราการ">สมุทรปราการ</option>
+                        <option value="สมุทรสงคราม">สมุทรสงคราม</option>
+                        <option value="สมุทรสาคร">สมุทรสาคร</option>
+                        <option value="สระแก้ว">สระแก้ว</option>
+                        <option value="สระบุรี">สระบุรี</option>
+                        <option value="สิงห์บุรี">สิงห์บุรี</option>
+                        <option value="สุโขทัย">สุโขทัย</option>
+                        <option value="สุพรรณบุรี">สุพรรณบุรี</option>
+                        <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
+                        <option value="สุรินทร์">สุรินทร์</option>
+                        <option value="หนองคาย">หนองคาย</option>
+                        <option value="หนองบัวลำภู">หนองบัวลำภู</option>
+                        <option value="อ่างทอง">อ่างทอง</option>
+                        <option value="อำนาจเจริญ">อำนาจเจริญ</option>
+                        <option value="อุดรธานี">อุดรธานี</option>
+                        <option value="อุตรดิตถ์">อุตรดิตถ์</option>
+                        <option value="อุทัยธานี">อุทัยธานี</option>
+                        <option value="อุบลราชธานี">อุบลราชธานี</option>
+                    </select>
+                </div>
+            </fieldset>
 
-        <!-- ส่วนที่ 2 -->
-        <div class="form-group">
-            <label>ประเภทการขนส่ง</label>
-            <div class="radio-group">
-                <label><input type="radio" name="entry.895767174" value="เหมาเที่ยว"> เหมาเที่ยว</label>
-                <label><input type="radio" name="entry.895767174" value="กระจายสินค้า"> กระจายสินค้า</label>
-                <label><input type="radio" name="entry.895767174" value="Express"> Express</label>
-                <label><input type="radio" name="entry.895767174" value="Cross border"> Cross border</label>
-            </div>
-        </div>
+            <hr class="border-gray-200">
+
+            <!-- Section 2: Transportation Details -->
+            <fieldset class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทการขนส่ง</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.895767174" value="เหมาเที่ยว" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">เหมาเที่ยว</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.895767174" value="กระจายสินค้า" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">กระจายสินค้า</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.895767174" value="Express" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">Express</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.895767174" value="Cross border" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">Cross border</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทรถ 1</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.1528054360" value="4W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">4W</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.1528054360" value="6W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">6W</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.1528054360" value="10W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">10W</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.1528054360" value="เทรลเลอร์" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">เทรลเลอร์</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทรถ 2</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.839458641" value="พื้นเรียบ" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">พื้นเรียบ</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.839458641" value="คอก" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">คอก</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.839458641" value="ตู้" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">ตู้</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
+                            <input type="radio" name="entry.839458641" value="ตู้เย็น" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">ตู้เย็น</span>
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <button type="submit" class="w-full py-3 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition">
+                สมัครสมาชิก
+            </button>
+        </form>
         
-        <div class="form-group">
-            <label>ประเภทรถ 1</label>
-            <div class="radio-group">
-                <label><input type="radio" name="entry.1528054360" value="4W"> 4W</label>
-                <label><input type="radio" name="entry.1528054360" value="6W"> 6W</label>
-                <label><input type="radio" name="entry.1528054360" value="10W"> 10W</label>
-                <label><input type="radio" name="entry.1528054360" value="เทรลเลอร์"> เทรลเลอร์</label>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>ประเภทรถ 2</label>
-            <div class="radio-group">
-                <label><input type="radio" name="entry.839458641" value="พื้นเรียบ"> พื้นเรียบ</label>
-                <label><input type="radio" name="entry.839458641" value="คอก"> คอก</label>
-                <label><input type="radio" name="entry.839458641" value="ตู้"> ตู้</label>
-                <label><input type="radio" name="entry.839458641" value="ตู้เย็น"> ตู้เย็น</label>
-            </div>
-        </div>
-        
-        <button type="submit">สมัครสมาชิก</button>
-    </form>
-    
-    <!-- Status message container -->
-    <div id="statusMessage"></div>
+        <!-- Status message container -->
+        <div id="statusMessage" class="text-center mt-6 font-medium"></div>
+    </div>
 
     <script>
         const form = document.getElementById('registrationForm');
@@ -242,54 +216,41 @@
             const phone = document.querySelector('input[name="entry.1929394666"]').value;
 
             if (!fullName || !phone) {
-                statusMessage.className = 'error';
+                statusMessage.className = 'text-red-600'; // Tailwind class for error color
                 statusMessage.textContent = 'กรุณากรอกข้อมูลในช่องที่จำเป็นให้ครบถ้วน';
                 return;
             }
 
-            statusMessage.className = '';
+            statusMessage.className = 'text-gray-600'; // Tailwind class for info color
             statusMessage.textContent = 'กำลังส่งข้อมูล...';
-
+            
             const formData = new FormData(form);
             const params = new URLSearchParams();
 
-            const checkedCarType1 = document.querySelector('input[name="entry.1528054360"]:checked');
-            if (checkedCarType1) {
-                params.append(checkedCarType1.name, checkedCarType1.value);
+            // Iterate over all form entries and append them to the URLSearchParams
+            for (const pair of formData.entries()) {
+                params.append(pair[0], pair[1]);
             }
-
-            const checkedCarType2 = document.querySelector('input[name="entry.839458641"]:checked');
-            if (checkedCarType2) {
-                params.append(checkedCarType2.name, checkedCarType2.value);
-            }
-            
-            const checkedTransportType = document.querySelector('input[name="entry.895767174"]:checked');
-            if (checkedTransportType) {
-                params.append(checkedTransportType.name, checkedTransportType.value);
-            }
-            
-            params.append('entry.287163873', formData.get('entry.287163873'));
-            params.append('entry.1929394666', formData.get('entry.1929394666'));
-            params.append('entry.1641413677', formData.get('entry.1641413677'));
 
             try {
-                const response = await fetch(formUrl, {
+                // Fetch request to submit the form data to Google Forms
+                await fetch(formUrl, {
                     method: 'POST',
                     body: params,
-                    mode: 'no-cors'
+                    mode: 'no-cors' // Important for submitting to Google Forms
                 });
                 
-                statusMessage.className = 'success';
+                statusMessage.className = 'text-green-600'; // Tailwind class for success color
                 statusMessage.textContent = 'การสมัครสำเร็จแล้ว! ขอบคุณที่เข้าร่วม';
                 form.reset();
             } catch (error) {
                 console.error('Submission error:', error);
-                statusMessage.className = 'error';
+                statusMessage.className = 'text-red-600'; // Tailwind class for error color
                 statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองอีกครั้ง';
             }
         });
     </script>
-</div>
 
 </body>
 </html>
+
