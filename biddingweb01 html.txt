@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ร่วมประมูลงานขนส่ง - เอส เอส แอล โลจิสติกส์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-800">ร่วมประมูลงานขนส่ง</h1>
+            <p class="text-lg md:text-xl text-gray-600 mt-2">ประมูลงานขนส่ง บริษัท ปลูกผักเพราะรักแม่ จำกัด ผ่านบริษัท เอส เอส แอล โลจิสติกส์</p>
+        </header>
+
+        <div id="auction-form-container" class="bg-white p-6 rounded-lg shadow-md">
+            <!-- Step 1: Auction Conditions -->
+            <section id="step-1" class="step active">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">เงื่อนไขการประมูล</h2>
+                <div class="prose max-w-none text-gray-700">
+                    <p>เพื่อให้การประมูลเป็นไปอย่างเรียบร้อยและยุติธรรม ผู้เข้าร่วมทุกท่านโปรดอ่านและยอมรับเงื่อนไขดังต่อไปนี้:</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>ผู้เข้าร่วมประมูลต้องกรอกข้อมูลที่เป็นจริงและสามารถตรวจสอบได้</li>
+                        <li>การเสนอราคาต้องเป็นตัวเลขเท่านั้น และมีหน่วยเป็นบาทไทย (THB)</li>
+                        <li>ผู้ชนะการประมูลจะได้รับการติดต่อกลับจากเจ้าหน้าที่ภายใน 24 ชั่วโมงหลังสิ้นสุดการประมูล</li>
+                        <li>บริษัทฯ ขอสงวนสิทธิ์ในการยกเลิกหรือเปลี่ยนแปลงการประมูลโดยไม่ต้องแจ้งให้ทราบล่วงหน้า</li>
+                        <li>การตัดสินของบริษัท เอส เอส แอล โลจิสติกส์ ถือเป็นที่สิ้นสุด</li>
+                        <li>ราคาที่เสนอเป็นราคาสุทธิ ไม่รวมภาษีมูลค่าเพิ่ม (VAT 7%)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Step 2: Bidder Information -->
+            <section id="step-2" class="step">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">ข้อมูลผู้ประมูล</h2>
+                <form id="bidder-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล</label>
+                        <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="กรอกชื่อและนามสกุล" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="08xxxxxxxx" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="example@email.com" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทผู้ประมูล</label>
+                        <div class="flex items-center space-x-6">
+                            <div class="flex items-center">
+                                <input id="type-individual" name="bidderType" type="radio" value="individual" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" checked onchange="toggleCompanyField()">
+                                <label for="type-individual" class="ml-2 block text-sm text-gray-900">บุคคลธรรมดา</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="type-corporate" name="bidderType" type="radio" value="corporate" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" onchange="toggleCompanyField()">
+                                <label for="type-corporate" class="ml-2 block text-sm text-gray-900">นิติบุคคล</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="companyNameContainer" class="md:col-span-2 hidden">
+                        <label for="companyName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อบริษัท</label>
+                        <input type="text" id="companyName" name="companyName" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="ระบุชื่อบริษัท">
+                    </div>
+                </form>
+            </section>
+
+            <!-- Step 3: Bidding Cards -->
+            <section id="step-3" class="step">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-blue-700">กรอกราคาประมูล</h2>
+                <div id="auction-cards-container" class="space-y-6">
+                    <!-- Auction cards will be dynamically inserted here -->
+                </div>
+            </section>
+            
+            <!-- Navigation Buttons -->
+            <div id="navigation-buttons" class="mt-8 pt-4 border-t flex justify-between items-center">
+                <button id="prevBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg transition duration-300">
+                    ย้อนกลับ
+                </button>
+                <button id="nextBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                    ถัดไป
+                </button>
+                <button id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 hidden">
+                    ส่งข้อมูลการประมูล
+                </button>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div id="success-message" class="hidden text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative" role="alert">
+            <strong class="font-bold">ส่งข้อมูลสำเร็จ!</strong>
+            <span class="block sm:inline">เราได้รับข้อมูลการประมูลของคุณแล้ว ขอบคุณครับ</span>
+        </div>
+    </div>
+
+    <script>
+        // --- URL for Google Apps Script ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvF7qZRjGv4C5VFClTv5ugW2NkYG3YinrwEk43qx8AbGxVTOiBzG4VekDn10D7e6SUtQ/exec'; 
+
+        let currentStep = 1;
+        const steps = document.querySelectorAll('.step');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function showStep(stepNumber) {
+            steps.forEach(step => step.classList.remove('active'));
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+            updateButtons();
+        }
+
+        function updateButtons() {
+            if (currentStep === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            } else if (currentStep === steps.length) {
+                prevBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                prevBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < steps.length) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        function toggleCompanyField() {
+            const corporateRadio = document.getElementById('type-corporate');
+            const companyNameContainer = document.getElementById('companyNameContainer');
+            const companyNameInput = document.getElementById('companyName');
+            if (corporateRadio.checked) {
+                companyNameContainer.classList.remove('hidden');
+                companyNameInput.required = true;
+            } else {
+                companyNameContainer.classList.add('hidden');
+                companyNameInput.required = false;
+            }
+        }
+
+        document.getElementById('type-individual').addEventListener('change', toggleCompanyField);
+        document.getElementById('type-corporate').addEventListener('change', toggleCompanyField);
+
+        const auctionData = [
+            { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "ขอนแก่น", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", productType: "อาหารสด", weightKg: 1500, details: "" },
+            { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "ชลบุรี", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", productType: "อาหารสด", weightKg: 1200, details: "ต้องการรถด่วน" },
+            { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "สมุทรปราการ", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", productType: "อาหารสด", weightKg: 1200, details: "" }
+        ];
+
+        function populateAuctionCards() {
+            const container = document.getElementById('auction-cards-container');
+            container.innerHTML = ''; 
+
+            auctionData.forEach((item, index) => {
+                const vehicle = `${item.vehicleType1} ${item.vehicleType2}`;
+                const card = `
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm transition hover:shadow-md">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+                            <div class="md:col-span-2 space-y-3 text-gray-700">
+                                <h3 class="text-lg font-bold text-blue-800">${item.company}</h3>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                                    <p><strong class="font-medium text-gray-600">ประเภทรถ:</strong> ${vehicle}</p>
+                                    <p><strong class="font-medium text-gray-600">การขนส่ง:</strong> ${item.jobType}</p>
+                                    <p><strong class="font-medium text-gray-600">ต้นทาง:</strong> ${item.origin}</p>
+                                    <p><strong class="font-medium text-gray-600">ปลายทาง:</strong> ${item.destination}</p>
+                                    <p><strong class="font-medium text-gray-600">ประเภทสินค้า:</strong> ${item.productType}</p>
+                                    <p><strong class="font-medium text-gray-600">น้ำหนัก:</strong> ${item.weightKg.toLocaleString()} กก.</p>
+                                </div>
+                                <p class="text-sm"><strong class="font-medium text-gray-600">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</p>
+                            </div>
+                            <div class="flex flex-col justify-center items-center bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <label for="bid_price_${index + 1}" class="font-bold text-gray-800 mb-2">ราคาที่เสนอ (บาท)</label>
+                                <input type="number" id="bid_price_${index + 1}" name="bid_price_${index + 1}" class="w-full max-w-xs text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-lg font-bold" placeholder="0.00">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // --- Form Submission (Final Iframe Method) ---
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const bidderForm = document.getElementById('bidder-form');
+            if (!bidderForm.checkValidity()) {
+                bidderForm.reportValidity();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'กำลังส่งข้อมูล...';
+
+            const bidderInfo = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                bidderType: document.querySelector('input[name="bidderType"]:checked').value,
+                companyName: document.getElementById('companyName').value || ''
+            };
+
+            const bids = auctionData.map((item, index) => {
+                const price = document.getElementById(`bid_price_${index + 1}`).value;
+                return { ...item, offeredPrice: price || 'ไม่ได้เสนอราคา' };
+            });
+
+            const payload = { bidderInfo, bids };
+
+            const iframeId = 'hidden_iframe';
+            let iframe = document.getElementById(iframeId);
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = iframeId;
+                iframe.name = iframeId;
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = SCRIPT_URL;
+            form.target = iframeId;
+
+            const dataInput = document.createElement('input');
+            dataInput.type = 'hidden';
+            dataInput.name = 'payload';
+            dataInput.value = JSON.stringify(payload);
+            form.appendChild(dataInput);
+
+            document.body.appendChild(form);
+            form.submit();
+
+            setTimeout(() => {
+                document.getElementById('auction-form-container').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                document.body.removeChild(form);
+            }, 1500);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showStep(currentStep);
+            populateAuctionCards();
+        });
+
+    </script>
+
+</body>
+</html>
