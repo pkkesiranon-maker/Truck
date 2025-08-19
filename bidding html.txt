@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ค้นหางานประมูลทั้งหมด - SSL Logistics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-green-50 text-gray-800">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">ค้นหางานประมูลทั้งหมด</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600">ร่วมประมูลงานขนส่ง ผ่านบริษัท เอส เอส แอล โลจิสติกส์ ได้ทีนี่</p>
+        </header>
+
+        <!-- Companies Grid Section -->
+        <main>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+                <!-- Company Card 1 -->
+                <a href="https://pkkesiranon-maker.github.io/Truck/bidding/ปลูกผักเพราะรักแม่" target="_blank" rel="noopener noreferrer" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://placehold.co/64x64/3498db/ffffff?text=A" alt="โลโก้บริษัท ปลูกผักเพราะรักแม่จำกัด" class="w-16 h-16 rounded-lg">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 group-hover:text-green-600">บริษัท ปลูกผักเพราะรักแม่จำกัด</h2>
+                            <p class="text-gray-500">ผู้ให้บริการขนส่งชั้นนำ</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">เปิดประมูลงานขนส่งสินค้าอุปโภคบริโภคทั่วประเทศ</p>
+                    <div class="mt-6 text-right font-semibold text-green-600">
+                        เลือกดูงานประมูล &rarr;
+                    </div>
+                </a>
+
+                <!-- Company Card 2 -->
+                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://placehold.co/64x64/2ecc71/ffffff?text=B" alt="โลโก้บริษัท B" class="w-16 h-16 rounded-lg">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 group-hover:text-green-600">บริษัท B โลจิสติกส์</h2>
+                            <p class="text-gray-500">เชี่ยวชาญด้านของสด</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">ประมูลงานขนส่งสินค้าควบคุมอุณหภูมิและสินค้าเกษตร</p>
+                    <div class="mt-6 text-right font-semibold text-green-600">
+                        เลือกดูงานประมูล &rarr;
+                    </div>
+                </a>
+
+                <!-- Company Card 3 -->
+                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://placehold.co/64x64/9b59b6/ffffff?text=C" alt="โลโก้บริษัท C" class="w-16 h-16 rounded-lg">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 group-hover:text-green-600">บริษัท C ทรานสปอร์ต</h2>
+                            <p class="text-gray-500">ขนส่งสินค้าระหว่างประเทศ</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">งานประมูลนำเข้าและส่งออกสินค้าไปยังโซนเอเชีย</p>
+                    <div class="mt-6 text-right font-semibold text-green-600">
+                        เลือกดูงานประมูล &rarr;
+                    </div>
+                </a>
+
+                <!-- Company Card 4 -->
+                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://placehold.co/64x64/e67e22/ffffff?text=D" alt="โลโก้บริษัท D" class="w-16 h-16 rounded-lg">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900 group-hover:text-green-600">บริษัท D กรุ๊ป</h2>
+                            <p class="text-gray-500">ขนส่งสินค้าขนาดใหญ่</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600">ประมูลงานขนย้ายเครื่องจักรและอุปกรณ์โรงงาน</p>
+                    <div class="mt-6 text-right font-semibold text-green-600">
+                        เลือกดูงานประมูล &rarr;
+                    </div>
+                </a>
+                
+                <!-- Add more company cards here as needed -->
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 text-gray-500">
+            <p>&copy; 2024 SSL Logistics. สงวนลิขสิทธิ์.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Add a click listener only to placeholder links
+        document.querySelectorAll('a.company-card-link[href="#"]').forEach(card => {
+            card.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevents the link from navigating
+                
+                // For this demo, we'll just show a message.
+                const companyName = card.querySelector('h2').textContent;
+                alert(`คุณเลือก ${companyName}\nในระบบจริงจะนำทางไปยังหน้าประมูลของบริษัทนี้`);
+            });
+        });
+    </script>
+
+</body>
+</html>
