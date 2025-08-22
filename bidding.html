@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+<!-- 
+  ไฟล์ HTML นี้พร้อมสำหรับใช้งานบน GitHub Pages แล้ว
+  เนื่องจากใช้ Tailwind CSS และ Google Fonts ผ่าน CDN ซึ่งเป็นลิงก์ออนไลน์
+  และลิงก์ไปยังหน้าประมูลก็เป็น URL แบบเต็ม (Absolute URL) ทำให้สามารถทำงานได้ทันที
+-->
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ค้นหางานประมูลทั้งหมด - SSL Logistics</title>
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts via CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;700&display=swap" rel="stylesheet">
@@ -29,8 +36,8 @@
         <main>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
-                <!-- Company Card 1 -->
-                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                <!-- Card 1: 4 Wheels -->
+                <a href="https://pkkesiranon-maker.github.io/Truck/bidding/4w" target="_blank" rel="noopener noreferrer" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
                     <div class="flex items-center space-x-4">
                         <img src="https://placehold.co/64x64/3498db/ffffff?text=4" alt="โลโก้ประมูลงานรถ 4 ล้อ" class="w-16 h-16 rounded-lg">
                         <div>
@@ -44,8 +51,8 @@
                     </div>
                 </a>
 
-                <!-- Company Card 2 -->
-                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                <!-- Card 2: 6 Wheels -->
+                <a href="https://pkkesiranon-maker.github.io/Truck/bidding/6w" target="_blank" rel="noopener noreferrer" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
                     <div class="flex items-center space-x-4">
                         <img src="https://placehold.co/64x64/2ecc71/ffffff?text=6" alt="โลโก้ประมูลงานรถ 6 ล้อ" class="w-16 h-16 rounded-lg">
                         <div>
@@ -59,8 +66,8 @@
                     </div>
                 </a>
 
-                <!-- Company Card 3 -->
-                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                <!-- Card 3: 10 Wheels -->
+                <a href="https://pkkesiranon-maker.github.io/Truck/bidding/10w" target="_blank" rel="noopener noreferrer" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
                     <div class="flex items-center space-x-4">
                         <img src="https://placehold.co/64x64/9b59b6/ffffff?text=10" alt="โลโก้ประมูลงานรถ 10 ล้อ" class="w-16 h-16 rounded-lg">
                         <div>
@@ -74,8 +81,8 @@
                     </div>
                 </a>
 
-                <!-- Company Card 4 -->
-                <a href="#" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
+                <!-- Card 4: 22 Wheels -->
+                <a href="https://pkkesiranon-maker.github.io/Truck/bidding/22w" target="_blank" rel="noopener noreferrer" class="company-card-link group block bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1">
                     <div class="flex items-center space-x-4">
                         <img src="https://placehold.co/64x64/e67e22/ffffff?text=22" alt="โลโก้ประมูลงานรถ 22 ล้อ" class="w-16 h-16 rounded-lg">
                         <div>
@@ -89,8 +96,6 @@
                     </div>
                 </a>
                 
-                <!-- Add more company cards here as needed -->
-
             </div>
         </main>
 
@@ -101,19 +106,5 @@
 
     </div>
 
-    <script>
-        // Add a click listener only to placeholder links
-        document.querySelectorAll('a.company-card-link[href="#"]').forEach(card => {
-            card.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevents the link from navigating
-                
-                // For this demo, we'll just show a message.
-                const companyName = card.querySelector('h2').textContent;
-                alert(`คุณเลือก ${companyName}\nในระบบจริงจะนำทางไปยังหน้าประมูลของหมวดหมู่นี้`);
-            });
-        });
-    </script>
-
 </body>
 </html>
-
