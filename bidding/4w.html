@@ -228,7 +228,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- URL for Google Apps Script ---
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyvF7qZRjGv4C5VFClTv5ugW2NkYG3YinrwEk43qx8AbGxVTOiBzG4VekDn10D7e6SUtQ/exec'; 
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzq4fonx3tdl978FSeEGKejc13-Z70neK_3wKjfPf8OhkcN-2hDNp5Y54kpzuds9a-vw/exec'; 
 
             // --- State and DOM Elements ---
             let currentStep = 1;
@@ -480,110 +480,21 @@
                 document.getElementById(containerId).innerHTML = '';
             }
 
-            // --- Slip Verification and Proceed ---
+            // --- Slip Verification and Proceed (Temporarily Disabled for Testing) ---
             async function validateSlipAndProceed() {
                 if (!slipFile) {
                     showGenericError('summary-container', 'กรุณาแนบสลิปการโอนเงินเพื่อดำเนินการต่อ');
                     return;
                 }
 
-                const spinner = nextBtn.querySelector('svg');
-                nextBtn.disabled = true;
-                spinner.classList.remove('hidden');
-                nextBtnText.textContent = 'กำลังตรวจสอบสลิป...';
-
-                try {
-                    const base64String = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(slipFile);
-                        reader.onload = () => resolve(reader.result.split(',')[1]);
-                        reader.onerror = error => reject(error);
-                    });
-
-                    const totalFee = parseFloat(document.getElementById('total-fee').dataset.rawAmount);
-                    const expectedRecipient = "บริษัท เอส เอส แอล โลจิสติกส์ จำกัด";
-
-                    const prompt = `วิเคราะห์รูปภาพสลิปการโอนเงินนี้และดึงข้อมูลออกมาเป็น JSON ตาม schema ที่กำหนดเท่านั้น โดยให้ข้อมูลวันที่และเวลาอยู่ในรูปแบบ ISO 8601 ที่สมบูรณ์ (YYYY-MM-DDTHH:mm:ss.sssZ).`;
-                    
-                    const payload = {
-                        contents: [{
-                            parts: [
-                                { text: prompt },
-                                { inline_data: { mime_type: slipFile.type, data: base64String } }
-                            ]
-                        }],
-                        generation_config: {
-                            response_mime_type: "application/json",
-                            response_schema: {
-                                type: "OBJECT",
-                                properties: {
-                                    recipientName: { type: "STRING" },
-                                    amount: { type: "NUMBER" },
-                                    transferTimestamp: { type: "STRING", format: "date-time" }
-                                },
-                                required: ["recipientName", "amount", "transferTimestamp"]
-                            }
-                        }
-                    };
-                    
-                    const apiKey = ""; // API key will be provided by the environment
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`API request failed with status ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    if (!result.candidates?.[0]?.content?.parts?.[0]?.text) {
-                         throw new Error('ไม่สามารถวิเคราะห์ข้อมูลจากสลิปได้');
-                    }
-
-                    const slipData = JSON.parse(result.candidates[0].content.parts[0].text);
-
-                    // --- Validation Logic ---
-                    const normalizedRecipient = (slipData.recipientName || "")
-                        .replace(/[\s.]+/g, "")
-                        .toUpperCase();
-                    const expectedKeywords = ["เอสเอสแอล", "SSL", "โลจิสติกส์", "LOGISTICS"];
-                    const isRecipientValid = expectedKeywords.some(keyword => normalizedRecipient.includes(keyword.toUpperCase()));
-
-                    if (!isRecipientValid) {
-                         throw new Error(`ชื่อบัญชีผู้รับไม่ถูกต้อง (ต้องเป็น "${expectedRecipient}")`);
-                    }
-                    
-                    if (Math.abs(parseFloat(slipData.amount) - totalFee) > 0.01) {
-                        throw new Error(`จำนวนเงินไม่ถูกต้อง (ต้องเป็น ${totalFee} บาท)`);
-                    }
-
-                    const transferTime = new Date(slipData.transferTimestamp);
-                    const now = new Date();
-                    const timeDifferenceMilliseconds = now.getTime() - transferTime.getTime();
-
-                    if (timeDifferenceMilliseconds < 0 || timeDifferenceMilliseconds > 300000) { // 300000 ms = 5 minutes
-                        throw new Error('สลิปหมดอายุ (ต้องโอนเงินภายใน 5 นาทีล่าสุด)');
-                    }
-                    
-                    // --- If all validations pass ---
-                    clearGenericError('summary-container');
-                    populateBiddingForm();
-                    currentStep++;
-                    showStep(currentStep);
-
-                } catch (error) {
-                    console.error('Slip validation error:', error);
-                    showGenericError('summary-container', `ตรวจสอบสลิปไม่สำเร็จ: ${error.message}`);
-                } finally {
-                    nextBtn.disabled = false;
-                    spinner.classList.add('hidden');
-                    nextBtnText.textContent = 'ยืนยันการโอนเงิน';
-                }
+                // --- AI Verification is temporarily bypassed for testing purposes ---
+                console.log("Slip verification bypassed for testing.");
+                
+                // Directly proceed to the next step without verification
+                clearGenericError('summary-container');
+                populateBiddingForm();
+                currentStep++;
+                showStep(currentStep);
             }
 
             // --- Form Submission ---
@@ -746,3 +657,4 @@
 
 </body>
 </html>
+
