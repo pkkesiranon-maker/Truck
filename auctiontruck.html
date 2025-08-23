@@ -8,8 +8,11 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&display=swap');
+    body {
+        font-family: 'Kanit', sans-serif;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -20,9 +23,6 @@
     .min-h-screen {
         min-height: 100vh;
     }
-    body {
-        font-family: 'Kanit', sans-serif;
-    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-green-50 to-emerald-100 antialiased">
@@ -30,21 +30,91 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState } = React;
+    const { useState, useEffect } = React;
 
-    // Hardcoded list of 77 provinces of Thailand
-    const provinces = [
-      "กรุงเทพมหานคร", "กระบี่", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร", "ขอนแก่น", "จันทบุรี", "ฉะเชิงเทรา", "ชลบุรี", "ชัยนาท",
-      "ชัยภูมิ", "ชุมพร", "เชียงราย", "เชียงใหม่", "ตรัง", "ตราด", "ตาก", "นครนายก", "นครปฐม", "นครพนม",
-      "นครราชสีมา", "นครศรีธรรมราช", "นครสวรรค์", "นนทบุรี", "นราธิวาส", "น่าน", "บึงกาฬ", "บุรีรัมย์", "ปทุมธานี", "ประจวบคีรีขันธ์",
-      "ปราจีนบุรี", "ปัตตานี", "พระนครศรีอยุธยา", "พะเยา", "พังงา", "พัทลุง", "พิจิตร", "พิษณุโลก", "เพชรบุรี", "เพชรบูรณ์",
-      "แพร่", "ภูเก็ต", "มหาสารคาม", "มุกดาหาร", "แม่ฮ่องสอน", "ยโสธร", "ยะลา", "ร้อยเอ็ด", "ระนอง", "ระยอง",
-      "ราชบุรี", "ลพบุรี", "ลำปาง", "ลำพูน", "เลย", "ศรีสะเกษ", "สกลนคร", "สงขลา", "สตูล", "สมุทรปราการ",
-      "สมุทรสงคราม", "สมุทรสาคร", "สระแก้ว", "สระบุรี", "สิงห์บุรี", "สุโขทัย", "สุพรรณบุรี", "สุราษฎร์ธานี", "สุรินทร์", "หนองคาย",
-      "หนองบัวลำภู", "อ่างทอง", "อำนาจเจริญ", "อุดรธานี", "อุตรดิตถ์", "อุทัยธานี", "อุบลราชธานี"
-    ];
+    // Data for provinces and districts of Thailand, with prefixes removed from districts
+    const thailandData = {
+      "กรุงเทพมหานคร": ["พระนคร", "ดุสิต", "หนองจอก", "บางรัก", "บางเขน", "บางกะปิ", "ปทุมวัน", "ป้อมปราบศัตรูพ่าย", "พระโขนง", "มีนบุรี", "ลาดกระบัง", "ยานนาวา", "สัมพันธวงศ์", "พญาไท", "ธนบุรี", "บางกอกใหญ่", "ห้วยขวาง", "คลองสาน", "ตลิ่งชัน", "บางกอกน้อย", "บางขุนเทียน", "ภาษีเจริญ", "หนองแขม", "ราษฎร์บูรณะ", "บางพลัด", "ดินแดง", "บึงกุ่ม", "สาทร", "บางซื่อ", "จตุจักร", "บางคอแหลม", "ประเวศ", "คลองเตย", "สวนหลวง", "ลาดพร้าว", "วัฒนา", "บางแค", "หลักสี่", "สายไหม", "คันนายาว", "สะพานสูง", "วังทองหลาง", "คลองสามวา", "บางนา", "ทวีวัฒนา", "ทุ่งครุ", "บางบอน"],
+      "กระบี่": ["เมืองกระบี่", "เขาพนม", "เกาะลันตา", "คลองท่อม", "อ่าวลึก", "ปลายพระยา", "ลำทับ", "เหนือคลอง"],
+      "กาญจนบุรี": ["เมืองกาญจนบุรี", "ไทรโยค", "บ่อพลอย", "ศรีสวัสดิ์", "ท่ามะกา", "ท่าม่วง", "ทองผาภูมิ", "สังขละบุรี", "พนมทวน", "เลาขวัญ", "ด่านมะขามเตี้ย", "หนองปรือ", "ห้วยกระเจา"],
+      "กาฬสินธุ์": ["เมืองกาฬสินธุ์", "นามน", "กมลาไสย", "ร่องคำ", "กุฉินารายณ์", "เขาวง", "ยางตลาด", "ห้วยเม็ก", "สหัสขันธ์", "คำม่วง", "ท่าคันโท", "หนองกุงศรี", "สมเด็จ", "ห้วยผึ้ง", "สามชัย", "นาคู", "ดอนจาน", "ฆ้องชัย"],
+      "กำแพงเพชร": ["เมืองกำแพงเพชร", "ไทรงาม", "คลองลาน", "ขาณุวรลักษบุรี", "คลองขลุง", "พรานกระต่าย", "ลานกระบือ", "ทรายทองวัฒนา", "ปางศิลาทอง", "บึงสามัคคี", "โกสัมพีนคร"],
+      "ขอนแก่น": ["เมืองขอนแก่น", "บ้านฝาง", "พระยืน", "หนองเรือ", "ชุมแพ", "สีชมพู", "น้ำพอง", "อุบลรัตน์", "กระนวน", "บ้านไผ่", "เปือยน้อย", "พล", "แวงใหญ่", "แวงน้อย", "หนองสองห้อง", "ภูเวียง", "มัญจาคีรี", "หนองนาคำ", "ซำสูง", "โคกโพธิ์ไชย", "ภูผาม่าน", "ชนบท", "บ้านแฮด", "โนนศิลา", "เวียงเก่า", "หนองแก"],
+      "จันทบุรี": ["เมืองจันทบุรี", "ขลุง", "ท่าใหม่", "โป่งน้ำร้อน", "มะขาม", "แหลมสิงห์", "สอยดาว", "แก่งหางแมว", "นายายอาม", "เขาคิชฌกูฏ"],
+      "ฉะเชิงเทรา": ["เมืองฉะเชิงเทรา", "บางคล้า", "บางน้ำเปรี้ยว", "บางปะกง", "บ้านโพธิ์", "พนมสารคาม", "ราชสาส์น", "สนามชัยเขต", "แปลงยาว", "ท่าตะเกียบ", "คลองเขื่อน"],
+      "ชลบุรี": ["เมืองชลบุรี", "บ้านบึง", "หนองใหญ่", "บางละมุง", "พานทอง", "พนัสนิคม", "ศรีราชา", "เกาะสีชัง", "สัตหีบ", "บ่อทอง", "เกาะจันทร์"],
+      "ชัยนาท": ["เมืองชัยนาท", "มโนรมย์", "วัดสิงห์", "สรรพยา", "สรรคบุรี", "หันคา", "หนองมะโมง", "เนินขาม"],
+      "ชัยภูมิ": ["เมืองชัยภูมิ", "บ้านเขว้า", "คอนสวรรค์", "เกษตรสมบูรณ์", "หนองบัวแดง", "จัตุรัส", "บำเหน็จณรงค์", "หนองบัวระเหว", "เทพสถิต", "ภูเขียว", "บ้านแท่น", "แก้งคร้อ", "คอนสาร", "ภักดีชุมพล", "เนินสง่า", "ซับใหญ่"],
+      "ชุมพร": ["เมืองชุมพร", "ท่าแซะ", "ปะทิว", "หลังสวน", "ละแม", "พะโต๊ะ", "สวี", "ทุ่งตะโก"],
+      "เชียงราย": ["เมืองเชียงราย", "เวียงชัย", "เชียงของ", "เทิง", "พาน", "ป่าแดد", "แม่จัน", "เชียงแสน", "แม่สาย", "แม่สรวย", "เวียงป่าเป้า", "พญาเม็งราย", "เวียงแก่น", "ขุนตาล", "แม่ฟ้าหลวง", "แม่ลาว", "เวียงเชียงรุ้ง", "ดอยหลวง"],
+      "เชียงใหม่": ["เมืองเชียงใหม่", "จอมทอง", "แม่แจ่ม", "เชียงดาว", "ดอยสะเก็ด", "แม่แตง", "แม่ริม", "สะเมิง", "ฝาง", "แม่อาย", "พร้าว", "สันป่าตอง", "สันกำแพง", "สันทราย", "หางดง", "ฮอด", "ดอยเต่า", "อมก๋อย", "สารภี", "เวียงแหง", "ไชยปราการ", "แม่วาง", "แม่ออน", "ดอยหล่อ", "กัลยาณิวัฒนา"],
+      "ตรัง": ["เมืองตรัง", "กันตัง", "ย่านตาขาว", "ปะเหลียน", "สิเกา", "ห้วยยอด", "วังวิเศษ", "นาโยง", "รัษฎา", "หาดสำราญ"],
+      "ตราด": ["เมืองตราด", "คลองใหญ่", "เขาสมิง", "บ่อไร่", "แหลมงอบ", "เกาะกูด", "เกาะช้าง"],
+      "ตาก": ["เมืองตาก", "บ้านตาก", "สามเงา", "แม่ระมาด", "ท่าสองยาง", "แม่สอด", "พบพระ", "อุ้มผาง", "วังเจ้า"],
+      "นครนายก": ["เมืองนครนายก", "ปากพลี", "บ้านนา", "องครักษ์"],
+      "นครปฐม": ["เมืองนครปฐม", "กำแพงแสน", "นครชัยศรี", "ดอนตูม", "บางเลน", "สามพราน", "พุทธมณฑล"],
+      "นครพนม": ["เมืองนครพนม", "ปลาปาก", "ท่าอุเทน", "บ้านแพง", "ธาตุพนม", "เรณูนคร", "นาแก", "ศรีสงคราม", "นาหว้า", "โพนสวรรค์", "นาทม", "วังยาง"],
+      "นครราชสีมา": ["เมืองนครราชสีมา", "ครบุรี", "โชคชัย", "จักราช", "โนนแดง", "โนนสูง", "โนนไทย", "ปากช่อง", "พิมาย", "สีคิ้ว", "สูงเนิน", "บัวใหญ่", "ประทาย", "ปักธงชัย", "ห้วยแถลง", "ชุมพวง", "ด่านขุนทด", "ขามทะเลสอ", "ขามสะแกแสง", "คง", "พระทองคำ", "เมืองยาง", "ลำทะเมนชัย", "วังน้ำเขียว", "เฉลิมพระเกียรติ", "เทพารักษ์", "บ้านเหลื่อม", "สีดา", "บัวลาย", "แก้งสนามนาง", "หนองบุญมาก", "เสิงสาง"],
+      "นครศรีธรรมราช": ["เมืองนครศรีธรรมราช", "พรหมคีรี", "ลานสกา", "ฉวาง", "พิปูน", "เชียรใหญ่", "ชะอวด", "ท่าศาลา", "ทุ่งสง", "นาบอน", "ทุ่งใหญ่", "ปากพนัง", "ร่อนพิบูลย์", "สิชล", "ขนอม", "หัวไทร", "บางขัน", "ถ้ำพรรณรา", "จุฬาภรณ์", "พระพรหม", "นบพิตำ", "ช้างกลาง", "เฉลิมพระเกียรติ"],
+      "นครสวรรค์": ["เมืองนครสวรรค์", "โกรกพระ", "ชุมแสง", "หนองบัว", "บรรพตพิสัย", "เก้าเลี้ยว", "ตาคลี", "ท่าตะโก", "ไพศาลี", "พยุหะคีรี", "ลาดยาว", "ตากฟ้า", "แม่วงก์", "แม่เปิน", "ชุมตาบง"],
+      "นนทบุรี": ["เมืองนนทบุรี", "บางกรวย", "บางใหญ่", "บางบัวทอง", "ไทรน้อย", "ปากเกร็ด"],
+      "นราธิวาส": ["เมืองนราธิวาส", "ตากใบ", "บาเจาะ", "ยี่งอ", "ระแงะ", "รือเสาะ", "ศรีสาคร", "แว้ง", "สุคิริน", "สุไหงโก-ลก", "สุไหงปาดี", "จะแนะ", "เจาะไอร้อง"],
+      "น่าน": ["เมืองน่าน", "แม่จริม", "บ้านหลวง", "นาน้อย", "ปัว", "ท่าวังผา", "เวียงสา", "ทุ่งช้าง", "เชียงกลาง", "นาหมื่น", "สันติสุข", "บ่อเกลือ", "สองแคว", "ภูเพียง", "เฉลิมพระเกียรติ"],
+      "บึงกาฬ": ["เมืองบึงกาฬ", "พรเจริญ", "โซ่พิสัย", "เซกา", "ปากคาด", "บึงโขงหลง", "ศรีวิไล", "บุ่งคล้า"],
+      "บุรีรัมย์": ["เมืองบุรีรัมย์", "คูเมือง", "กระสัง", "นางรอง", "หนองกี่", "ละหานทราย", "ประโคนชัย", "บ้านกรวด", "พุทไธสง", "ลำปลายมาศ", "สตึก", "ปะคำ", "นาโพธิ์", "หนองหงส์", "พลับพลาชัย", "ห้วยราช", "โนนสุวรรณ", "ชำนิ", "โนนดินแดง", "บ้านใหม่ไชยพจน์", "บ้านด่าน", "แคนดง", "เฉลิมพระเกียรติ"],
+      "ปทุมธานี": ["เมืองปทุมธานี", "คลองหลวง", "ธัญบุรี", "หนองเสือ", "ลาดหลุมแก้ว", "ลำลูกกา", "สามโคก"],
+      "ประจวบคีรีขันธ์": ["เมืองประจวบคีรีขันธ์", "กุยบุรี", "ทับสะแก", "บางสะพาน", "บางสะพานน้อย", "ปราณบุรี", "หัวหิน", "สามร้อยยอด"],
+      "ปราจีนบุรี": ["เมืองปราจีนบุรี", "กบินทร์บุรี", "นาดี", "บ้านสร้าง", "ประจันตคาม", "ศรีมหาโพธิ", "ศรีมโหสถ"],
+      "ปัตตานี": ["เมืองปัตตานี", "โคกโพธิ์", "หนองจิก", "ปะนาเระ", "มายอ", "ทุ่งยางแดง", "สายบุรี", "ไม้แก่น", "ยะหริ่ง", "ยะรัง", "กะพ้อ", "แม่ลาน"],
+      "พระนครศรีอยุธยา": ["พระนครศรีอยุธยา", "ท่าเรือ", "นครหลวง", "บางไทร", "บางบาล", "บางปะอิน", "บางปะหัน", "ผักไห่", "ภาชี", "ลาดบัวหลวง", "วังน้อย", "เสนา", "บางซ้าย", "อุทัย", "มหาราช", "บ้านแพรก"],
+      "พะเยา": ["เมืองพะเยา", "จุน", "เชียงคำ", "เชียงม่วน", "ดอกคำใต้", "ปง", "แม่ใจ", "ภูซาง", "ภูกามยาว"],
+      "พังงา": ["เมืองพังงา", "เกาะยาว", "กะปง", "คุระบุรี", "ทับปุด", "ตะกั่วทุ่ง", "ตะกั่วป่า", "ท้ายเหมือง"],
+      "พัทลุง": ["เมืองพัทลุง", "กงหรา", "เขาชัยสน", "ตะโหมด", "ควนขนุน", "ปากพะยูน", "ศรีบรรพต", "ป่าบอน", "บางแก้ว", "ป่าพะยอม", "ศรีนครินทร์"],
+      "พิจิตร": ["เมืองพิจิตร", "วังทรายพูน", "โพธิ์ประทับช้าง", "ตะพานหิน", "บางมูลนาก", "โพทะเล", "สามง่าม", "ทับคล้อ", "สากเหล็ก", "บึงนาราง", "ดงเจริญ", "วชิรบารมี"],
+      "พิษณุโลก": ["เมืองพิษณุโลก", "นครไทย", "ชาติตระการ", "บางระกำ", "บางกระทุ่ม", "พรหมพิราม", "วัดโบสถ์", "วังทอง", "เนินมะปราง"],
+      "เพชรบุรี": ["เมืองเพชรบุรี", "เขาย้อย", "หนองหญ้าปล้อง", "ชะอำ", "ท่ายาง", "บ้านลาด", "บ้านแหลม", "แก่งกระจาน"],
+      "เพชรบูรณ์": ["เมืองเพชรบูรณ์", "ชนแดน", "หล่มสัก", "หล่มเก่า", "วิเชียรบุรี", "ศรีเทพ", "หนองไผ่", "บึงสามพัน", "น้ำหนาว", "วังโป่ง", "เขาค้อ"],
+      "แพร่": ["เมืองแพร่", "ร้องกวาง", "ลอง", "สูงเม่น", "เด่นชัย", "สอง", "วังชิ้น", "หนองม่วงไข่"],
+      "ภูเก็ต": ["เมืองภูเก็ต", "กะทู้", "ถลาง"],
+      "มหาสารคาม": ["เมืองมหาสารคาม", "แกดำ", "โกสุมพิสัย", "กันทรวิชัย", "เชียงยืน", "บรบือ", "นาเชือก", "พยัคฆภูมิพิสัย", "วาปีปทุม", "นาดูน", "ยางสีสุราช", "กุดรัง", "ชื่นชม"],
+      "มุกดาหาร": ["เมืองมุกดาหาร", "นิคมคำสร้อย", "ดอนตาล", "ดงหลวง", "คำชะอี", "หว้านใหญ่", "หนองสูง"],
+      "แม่ฮ่องสอน": ["เมืองแม่ฮ่องสอน", "ขุนยวม", "ปาย", "แม่สะเรียง", "แม่ลาน้อย", "สบเมย", "ปางมะผ้า"],
+      "ยโสธร": ["เมืองยโสธร", "ทรายมูล", "กุดชุม", "คำเขื่อนแก้ว", "ป่าติ้ว", "มหาชนะชัย", "ค้อวัง", "เลิงนกทา", "ไทยเจริญ"],
+      "ยะลา": ["เมืองยะลา", "เบตง", "บันนังสตา", "ธารโต", "ยะหา", "รามัน", "กาบัง", "กรงปินัง"],
+      "ร้อยเอ็ด": ["เมืองร้อยเอ็ด", "เกษตรวิสัย", "ปทุมรัตต์", "จตุรพักตรพิมาน", "ธวัชบุรี", "พนมไพร", "โพนทอง", "โพธิ์ชัย", "หนองพอก", "เสลภูมิ", "สุวรรณภูมิ", "เมืองสรวง", "โพนทราย", "อาจสามารถ", "เมยวดี", "ศรีสมเด็จ", "จังหาร", "เชียงขวัญ", "หนองฮี", "ทุ่งเขาหลวง"],
+      "ระนอง": ["เมืองระนอง", "ละอุ่น", "กะเปอร์", "กระบุรี", "สุขสำราญ"],
+      "ระยอง": ["เมืองระยอง", "บ้านฉาง", "แกลง", "วังจันทร์", "บ้านค่าย", "ปลวกแดง", "เขาชะเมา", "นิคมพัฒนา"],
+      "ราชบุรี": ["เมืองราชบุรี", "จอมบึง", "สวนผึ้ง", "ดำเนินสะดวก", "บ้านโป่ง", "บางแพ", "โพธาราม", "ปากท่อ", "วัดเพลง", "บ้านคา"],
+      "ลพบุรี": ["เมืองลพบุรี", "พัฒนานิคม", "โคกสำโรง", "ชัยบาดาล", "ท่าวุ้ง", "บ้านหมี่", "ท่าหลวง", "สระโบสถ์", "โคกเจริญ", "ลำสนธิ", "หนองม่วง"],
+      "ลำปาง": ["เมืองลำปาง", "แม่เมาะ", "เกาะคา", "เสริมงาม", "งาว", "แจ้ห่ม", "วังเหนือ", "เถิน", "แม่พริก", "แม่ทะ", "สบปราบ", "ห้างฉัตร", "เมืองปาน"],
+      "ลำพูน": ["เมืองลำพูน", "แม่ทา", "บ้านโฮ่ง", "ลี้", "ทุ่งหัวช้าง", "ป่าซาง", "บ้านธิ", "เวียงหนองล่อง"],
+      "เลย": ["เมืองเลย", "นาด้วง", "เชียงคาน", "ปากชม", "ด่านซ้าย", "นาแห้ว", "ภูเรือ", "ท่าลี่", "วังสะพุง", "ภูกระดึง", "ภูหลวง", "ผาขาว", "เอราวัณ", "หนองหิน"],
+      "ศรีสะเกษ": ["เมืองศรีสะเกษ", "ยางชุมน้อย", "กันทรารมย์", "กันทรลักษ์", "ขุขันธ์", "ไพรบึง", "ปรางค์กู่", "ขุนหาญ", "ราษีไศล", "อุทุมพรพิสัย", "บึงบูรพ์", "ห้วยทับทัน", "โนนคูณ", "ศรีรัตนะ", "น้ำเกลี้ยง", "วังหิน", "ภูสิงห์", "เมืองจันทร์", "เบญจลักษ์", "พยุห์", "โพธิ์ศรีสุวรรณ", "ศิลาลาด"],
+      "สกลนคร": ["เมืองสกลนคร", "กุสุมาลย์", "กุดบาก", "พรรณานิคม", "พังโคน", "วาริชภูมิ", "นิคมน้ำอูน", "วานรนิวาส", "คำตากล้า", "บ้านม่วง", "อากาศอำนวย", "สว่างแดนดิน", "ส่องดาว", "เต่างอย", "โคกศรีสุพรรณ", "เจริญศิลป์", "โพนนาแก้ว", "ภูพาน"],
+      "สงขลา": ["เมืองสงขลา", "สทิงพระ", "จะนะ", "นาทวี", "เทพา", "สะบ้าย้อย", "ระโนด", "กระแสสินธุ์", "รัตภูมิ", "สะเดา", "หาดใหญ่", "นาหม่อม", "ควนเนียง", "บางกล่ำ", "สิงหนคร", "คลองหอยโข่ง"],
+      "สตูล": ["เมืองสตูล", "ควนโดน", "ควนกาหลง", "ท่าแพ", "ละงู", "ทุ่งหว้า", "มะนัง"],
+      "สมุทรปราการ": ["เมืองสมุทรปราการ", "บางบ่อ", "บางพลี", "พระประแดง", "พระสมุทรเจดีย์", "บางเสาธง"],
+      "สมุทรสงคราม": ["เมืองสมุทรสงคราม", "บางคนที", "อัมพวา"],
+      "สมุทรสาคร": ["เมืองสมุทรสาคร", "กระทุ่มแบน", "บ้านแพ้ว"],
+      "สระแก้ว": ["เมืองสระแก้ว", "คลองหาด", "ตาพระยา", "วังน้ำเย็น", "วัฒนานคร", "อรัญประเทศ", "เขาฉกรรจ์", "โคกสูง", "วังสมบูรณ์"],
+      "สระบุรี": ["เมืองสระบุรี", "แก่งคอย", "หนองแค", "วิหารแดง", "หนองแซง", "บ้านหมอ", "ดอนพุด", "หนองโดน", "พระพุทธบาท", "เสาไห้", "มวกเหล็ก", "วังม่วง", "เฉลิมพระเกียรติ"],
+      "สิงห์บุรี": ["เมืองสิงห์บุรี", "บางระจัน", "ค่ายบางระจัน", "พรหมบุรี", "ท่าช้าง", "อินทร์บุรี"],
+      "สุโขทัย": ["เมืองสุโขทัย", "บ้านด่านลานหอย", "คีรีมาศ", "กงไกรลาศ", "ศรีสัชนาลัย", "ศรีสำโรง", "สวรรคโลก", "ศรีนคร", "ทุ่งเสลี่ยม"],
+      "สุพรรณบุรี": ["เมืองสุพรรณบุรี", "เดิมบางนางบวช", "ด่านช้าง", "บางปลาม้า", "ศรีประจันต์", "ดอนเจดีย์", "สองพี่น้อง", "สามชุก", "อู่ทอง", "หนองหญ้าไซ"],
+      "สุราษฎร์ธานี": ["เมืองสุราษฎร์ธานี", "กาญจนดิษฐ์", "ดอนสัก", "เกาะสมุย", "เกาะพะงัน", "ไชยา", "ท่าชนะ", "คีรีรัฐนิคม", "บ้านตาขุน", "พนม", "ท่าฉาง", "บ้านนาสาร", "บ้านนาเดิม", "เคียนซา", "เวียงสระ", "พระแสง", "พุนพิน", "ชัยบุรี", "วิภาวดี"],
+      "สุรินทร์": ["เมืองสุรินทร์", "ชุมพลบุรี", "ท่าตูม", "จอมพระ", "ปราสาท", "กาบเชิง", "รัตนบุรี", "สนม", "ศีขรภูมิ", "สังขะ", "ลำดวน", "สำโรงทาบ", "บัวเชด", "พนมดงรัก", "ศรีณรงค์", "เขวาสินรินทร์", "โนนนารายณ์"],
+      "หนองคาย": ["เมืองหนองคาย", "ท่าบ่อ", "ศรีเชียงใหม่", "สังคม", "โพนพิสัย", "เฝ้าไร่", "รัตนวาปี", "โพธิ์ตาก", "สระใคร"],
+      "หนองบัวลำภู": ["เมืองหนองบัวลำภู", "นากลาง", "โนนสัง", "ศรีบุญเรือง", "สุวรรณคูหา", "นาวัง"],
+      "อ่างทอง": ["เมืองอ่างทอง", "ไชโย", "ป่าโมก", "โพธิ์ทอง", "แสวงหา", "วิเศษชัยชาญ", "สามโก้"],
+      "อำนาจเจริญ": ["เมืองอำนาจเจริญ", "ชานุมาน", "ปทุมราชวงศา", "พนา", "เสนางคนิคม", "หัวตะพาน", "ลืออำนาจ"],
+      "อุดรธานี": ["เมืองอุดรธานี", "กุดจับ", "หนองวัวซอ", "กุมภวาปี", "โนนสะอาด", "หนองหาน", "ทุ่งฝน", "ไชยวาน", "ศรีธาตุ", "วังสามหมอ", "บ้านดุง", "บ้านผือ", "น้ำโสม", "เพ็ญ", "สร้างคอม", "หนองแสง", "นายูง", "พิบูลย์รักษ์", "กู่แก้ว", "ประจักษ์ศิลปาคม"],
+      "อุตรดิตถ์": ["เมืองอุตรดิตถ์", "ตรอน", "ท่าปลา", "น้ำปาด", "ฟากท่า", "บ้านโคก", "พิชัย", "ลับแล", "ทองแสนขัน"],
+      "อุทัยธานี": ["เมืองอุทัยธานี", "ทัพทัน", "สว่างอารมณ์", "หนองฉาง", "หนองขาหย่าง", "บ้านไร่", "ลานสัก", "ห้วยคต"],
+      "อุบลราชธานี": ["เมืองอุบลราชธานี", "ศรีเมืองใหม่", "โขงเจียม", "เขื่องใน", "เขมราฐ", "เดชอุดม", "นาจะหลวย", "น้ำยืน", "บุณฑริก", "ตระการพืชผล", "กุดข้าวปุ้น", "ม่วงสามสิบ", "วารินชำราบ", "พิบูลมังสาหาร", "ตาลสุม", "โพธิ์ไทร", "สำโรง", "ดอนมดแดง", "สิรินธร", "ทุ่งศรีอุดม", "นาเยีย", "นาตาล", "เหล่าเสือโก้ก", "สว่างวีระวงศ์", "น้ำขุ่น"]
+    };
+    const provinces = Object.keys(thailandData);
 
-    // InputField and SelectField components are moved outside to prevent re-creation on every render
+    // InputField and SelectField components
     const InputField = ({ label, name, type = 'text', required = false, error, placeholder, value, onChange }) => (
       <div className="mb-6">
         <label className="block text-gray-700 text-sm font-semibold mb-2">
@@ -63,7 +133,7 @@
       </div>
     );
 
-    const SelectField = ({ label, name, options, required = false, value, onChange }) => (
+    const SelectField = ({ label, name, options, required = false, value, onChange, disabled = false }) => (
       <div className="mb-6">
         <label className="block text-gray-700 text-sm font-semibold mb-2">
           {label} {required && <span className="text-red-500">*</span>}
@@ -72,7 +142,8 @@
           name={name}
           value={value}
           onChange={onChange}
-          className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200"
+          disabled={disabled}
+          className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 disabled:bg-gray-100"
         >
           <option value="">-- กรุณาเลือก --</option>
           {options.map(option => (
@@ -82,22 +153,18 @@
       </div>
     );
 
-    // Main App component to manage the multi-step form and data
+    // Main App component
     const App = () => {
-      // State to manage the current step of the form
       const [currentPage, setCurrentPage] = useState('disclaimer');
-      // State to store the contact information
       const [contactData, setContactData] = useState({});
-      // State to store all the submitted job details
       const [jobDetails, setJobDetails] = useState([]);
-      // State to show success message after final submission
       const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
-      // Component for the disclaimer page
+      // Disclaimer Page Component
       const DisclaimerPage = () => (
         <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
           <p className="text-sm md:text-base text-gray-700 leading-relaxed text-justify mb-8">
-            บริษัท เอสเอสแอล โลจิสติกส์ จำกัด ("บริษัทฯ") ทำหน้าที่เป็นเพียง ตัวกลาง ในการประสานงานและส่งต่อข้อเสนอราคาค่าขนส่งระหว่างผู้ยื่นประมูลกับบริษัทต้นทางเท่านั้น บริษัทฯ ไม่ได้เป็นคู่สัญญาในงานขนส่ง การอนุมัติและคัดเลือกราคาค่าขนส่งทั้งหมดเป็นดุลยพินิจของบริษัทต้นทางแต่เพียงผู้เดียว ดังนั้น บริษัทฯ จะไม่รับผิดชอบต่อความเสียหาย ค่าใช้จ่าย หรือหนี้สินใด ๆ ที่เกิดขึ้นจากการขนส่งเป็นความรับผิดชอบของผู้ได้สัญญาขนส่งแต่เพียงผู้เดียว
+            บริษัท เอสเอสแอล โลจิสติกส์ จำกัด ("บริษัทฯ") ทำหน้าที่เป็นเพียง ตัวกลาง ในการประสานงานและส่งต่อข้อเสนอราคาค่าขนส่งระหว่างผู้ยื่นประมูลกับบริษัทต้นทางเท่านั้น บริษัทฯ ไม่ได้เป็นคู่สัญญาในงานขนส่ง การอนุมัติและคัดเลือกราคาค่าขนส่งทั้งหมดเป็นดุลยพินิจของบริษัทต้นทางแต่เพียงผู้เดียว ดังนั้น บริษัทฯ จะไม่รับผิดชอบต่อความเสียหาย ค่าใช้จ่าย หรือหนี้สินใด ๆ ที่เกิดขึ้นจากการขนส่ง ทั้งนี้ บริษัทฯ ขอเรียกเก็บเฉพาะ ค่าดำเนินการ สำหรับการอำนวยความสะดวกในการรับส่งข้อมูลเพื่อประกอบการประเมินเท่านั้น
           </p>
           <button
             onClick={() => setCurrentPage('contact')}
@@ -108,7 +175,7 @@
         </div>
       );
 
-      // Component for the contact information form
+      // Contact Form Component
       const ContactForm = () => {
         const [form, setForm] = useState({ companyName: '', contactName: '', phone: '', email: '' });
         const [errors, setErrors] = useState({});
@@ -148,49 +215,12 @@
           <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">กรอกข้อมูลผู้ติดต่อ</h2>
             <form onSubmit={handleSubmit} className="w-full">
-              <InputField
-                label="ชื่อบริษัท ที่ต้องการให้เสนองานประมูล"
-                name="companyName"
-                placeholder="ชื่อบริษัท"
-                required={true}
-                error={errors.companyName}
-                value={form.companyName}
-                onChange={handleChange}
-              />
-              <InputField
-                label="ชื่อผู้ติดต่อประสานงาน"
-                name="contactName"
-                placeholder="ชื่อผู้ติดต่อ"
-                required={true}
-                error={errors.contactName}
-                value={form.contactName}
-                onChange={handleChange}
-              />
-              <InputField
-                label="เบอร์โทรศัพท์"
-                name="phone"
-                type="tel"
-                placeholder="เบอร์โทรศัพท์ (ตัวเลขไม่เกิน 10 หลัก)"
-                required={true}
-                error={errors.phone}
-                value={form.phone}
-                onChange={handleChange}
-              />
-              <InputField
-                label="E-mail"
-                name="email"
-                type="email"
-                placeholder="E-mail"
-                required={true}
-                error={errors.email}
-                value={form.email}
-                onChange={handleChange}
-              />
+              <InputField label="ชื่อบริษัท ที่ต้องการให้เสนองานประมูล" name="companyName" placeholder="ชื่อบริษัท" required={true} error={errors.companyName} value={form.companyName} onChange={handleChange} />
+              <InputField label="ชื่อผู้ติดต่อประสานงาน" name="contactName" placeholder="ชื่อผู้ติดต่อ" required={true} error={errors.contactName} value={form.contactName} onChange={handleChange} />
+              <InputField label="เบอร์โทรศัพท์" name="phone" type="tel" placeholder="เบอร์โทรศัพท์ (ตัวเลขไม่เกิน 10 หลัก)" required={true} error={errors.phone} value={form.phone} onChange={handleChange} />
+              <InputField label="E-mail" name="email" type="email" placeholder="E-mail" required={true} error={errors.email} value={form.email} onChange={handleChange} />
               <div className="flex justify-center mt-8">
-                <button
-                  type="submit"
-                  className="px-10 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-emerald-600 hover:to-green-700 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50"
-                >
+                <button type="submit" className="px-10 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-emerald-600 hover:to-green-700 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50">
                   ยืนยัน
                 </button>
               </div>
@@ -199,18 +229,17 @@
         );
       };
 
-      // Component for the job details form
+      // Job Details Form Component
       const JobDetailsForm = () => {
         const [form, setForm] = useState({
-          vehicleType1: '',
-          vehicleType2: '',
-          shippingType: '',
-          origin: '',
-          destination: '',
-          productType: '',
-          weight: '',
-          otherDetails: '',
+          vehicleType1: '', vehicleType2: '', shippingType: '',
+          origin: '', originDistrict: '',
+          destination: '', destinationDistrict: '',
+          productType: '', weight: '', otherDetails: '',
+          tripsPerMonth: ''
         });
+        const [originDistricts, setOriginDistricts] = useState([]);
+        const [destinationDistricts, setDestinationDistricts] = useState([]);
         const [errors, setErrors] = useState({});
         const [message, setMessage] = useState('');
         const [isSubmitting, setIsSubmitting] = useState(false);
@@ -218,14 +247,28 @@
 
         const handleChange = (e) => {
           const { name, value } = e.target;
-          setForm(prevForm => ({ ...prevForm, [name]: value }));
+          setForm(prevForm => {
+              const newForm = { ...prevForm, [name]: value };
+              if (name === 'origin') {
+                  setOriginDistricts(thailandData[value] || []);
+                  newForm.originDistrict = ''; 
+              }
+              if (name === 'destination') {
+                  setDestinationDistricts(thailandData[value] || []);
+                  newForm.destinationDistrict = '';
+              }
+              return newForm;
+          });
           if (message) setMessage('');
         };
 
         const validate = () => {
           const newErrors = {};
+          if (!form.origin) newErrors.origin = 'กรุณาเลือกจังหวัดต้นทาง';
+          if (!form.destination) newErrors.destination = 'กรุณาเลือกจังหวัดปลายทาง';
           if (!form.productType) newErrors.productType = 'กรุณากรอกประเภทสินค้า';
           if (!form.weight || isNaN(form.weight)) newErrors.weight = 'กรุณากรอกน้ำหนักสินค้า (ตัวเลขเท่านั้น)';
+          if (!form.tripsPerMonth) newErrors.tripsPerMonth = 'กรุณากรอกปริมาณเที่ยววิ่งต่อเดือน';
           setErrors(newErrors);
           return Object.keys(newErrors).length === 0;
         };
@@ -233,21 +276,16 @@
         const handleAddJob = (e) => {
           e.preventDefault();
           if (validate()) {
-            const newJob = {
-              ...form,
-              weight: Number(form.weight),
-            };
-            setJobDetails([...jobDetails, newJob]);
-            setForm({ // Reset form fields after successful add
-                vehicleType1: '',
-                vehicleType2: '',
-                shippingType: '',
-                origin: '',
-                destination: '',
-                productType: '',
-                weight: '',
-                otherDetails: '',
+            setJobDetails([...jobDetails, form]);
+            setForm({
+              vehicleType1: '', vehicleType2: '', shippingType: '',
+              origin: '', originDistrict: '',
+              destination: '', destinationDistrict: '',
+              productType: '', weight: '', otherDetails: '',
+              tripsPerMonth: ''
             });
+            setOriginDistricts([]);
+            setDestinationDistricts([]);
             setMessage('ข้อมูลถูกเพิ่มแล้ว! คุณสามารถเพิ่มข้อมูลการขนส่งเพิ่มเติมได้');
           }
         };
@@ -256,7 +294,6 @@
           setJobDetails(jobDetails.filter((_, i) => i !== index));
         };
 
-        // This function now handles submitting data to Google Sheets via Google Forms
         const handleFinalSubmit = async () => {
           if (jobDetails.length === 0) {
             setMessage('กรุณาเพิ่มข้อมูลการขนส่งอย่างน้อย 1 รายการก่อนกดยืนยัน');
@@ -266,27 +303,30 @@
           setIsSubmitting(true);
           setSubmittedCount(0);
           
-          const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSePq1AmfDjHfZyNwRurYHi6cWoJ35RAsP21gLye0FL2EuvJuA/formResponse';
+          const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfYr_NXPJnqlOyrxqK5E8NfighTw3ZkCfJICF81rPm1dqNrYg/formResponse';
           
           let allSubmissionsSuccessful = true;
           for (const job of jobDetails) {
             const formData = new FormData();
             
             // Add contact data to the FormData object (will be the same for all jobs)
-            formData.append('entry.458433396', contactData.companyName);
-            formData.append('entry.855540336', contactData.contactName);
-            formData.append('entry.393776293', contactData.phone);
-            formData.append('entry.1514151359', contactData.email);
+            formData.append('entry.746196788', contactData.companyName);
+            formData.append('entry.829476242', contactData.contactName);
+            formData.append('entry.1767168145', contactData.phone);
+            formData.append('entry.1504300243', contactData.email);
 
             // Add job-specific data to the FormData object
-            formData.append('entry.1135972793', job.vehicleType1);
-            formData.append('entry.1338986664', job.vehicleType2);
-            formData.append('entry.677696846', job.shippingType);
-            formData.append('entry.2001671780', job.origin);
-            formData.append('entry.1271251164', job.destination);
-            formData.append('entry.738846975', job.productType);
-            formData.append('entry.525330776', job.weight);
-            formData.append('entry.2023531764', job.otherDetails);
+            formData.append('entry.1908326387', job.vehicleType1);
+            formData.append('entry.2131129183', job.vehicleType2);
+            formData.append('entry.1199160682', job.shippingType);
+            formData.append('entry.700473130', job.origin);
+            formData.append('entry.2019667312', job.originDistrict);
+            formData.append('entry.1035081680', job.destination);
+            formData.append('entry.2073624670', job.destinationDistrict);
+            formData.append('entry.1649864188', job.productType);
+            formData.append('entry.1761115257', job.weight);
+            formData.append('entry.494548649', job.otherDetails);
+            formData.append('entry.2046429835', job.tripsPerMonth);
 
             try {
               await fetch(GOOGLE_FORM_ACTION_URL, {
@@ -313,87 +353,33 @@
           <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-6 text-center">ข้อมูลการขนส่ง</h2>
             <form onSubmit={handleAddJob} className="w-full">
-              <SelectField
-                label="ประเภทรถ 1"
-                name="vehicleType1"
-                options={['4 ล้อ', '6 ล้อ', '10 ล้อ', 'เทรลเลอร์']}
-                value={form.vehicleType1}
-                onChange={handleChange}
-              />
-              <SelectField
-                label="ประเภทรถ 2"
-                name="vehicleType2"
-                options={['พื้นเรียบ', 'คอก', 'ตู้', 'ตู้เย็น']}
-                value={form.vehicleType2}
-                onChange={handleChange}
-              />
-              <SelectField
-                label="ประเภทการขนส่ง"
-                name="shippingType"
-                options={['เหมาเที่ยว', 'กระจายสินค้า', 'Express', 'Cross border']}
-                value={form.shippingType}
-                onChange={handleChange}
-              />
-              <SelectField
-                label="ต้นทาง (จังหวัด)"
-                name="origin"
-                options={provinces}
-                value={form.origin}
-                onChange={handleChange}
-              />
-              <SelectField
-                label="ปลายทาง (จังหวัด)"
-                name="destination"
-                options={provinces}
-                value={form.destination}
-                onChange={handleChange}
-              />
-              <InputField
-                label="ประเภทสินค้า"
-                name="productType"
-                placeholder="สินค้าทั่วไป, เครื่องจักร, ฯลฯ"
-                required={true}
-                error={errors.productType}
-                value={form.productType}
-                onChange={handleChange}
-              />
-              <InputField
-                label="น้ำหนักสินค้า (กิโลกรัม)"
-                name="weight"
-                type="number"
-                placeholder="เป็นตัวเลขเท่านั้น"
-                required={true}
-                error={errors.weight}
-                value={form.weight}
-                onChange={handleChange}
-              />
+              <SelectField label="ประเภทรถ (หลัก)" name="vehicleType1" options={['4 ล้อ', '6 ล้อ', '10 ล้อ', 'เทรลเลอร์']} value={form.vehicleType1} onChange={handleChange} />
+              <SelectField label="ประเภทรถ (ย่อย)" name="vehicleType2" options={['พื้นเรียบ', 'คอก', 'ตู้', 'ตู้เย็น']} value={form.vehicleType2} onChange={handleChange} />
+              <SelectField label="ประเภทการขนส่ง" name="shippingType" options={['เหมาเที่ยว', 'บรรทุกตามน้ำหนัก', 'กระจายสินค้า', 'Express', 'Cross border']} value={form.shippingType} onChange={handleChange} />
+              <SelectField label="ต้นทาง (จังหวัด)" name="origin" options={provinces} required={true} value={form.origin} onChange={handleChange} />
+              {errors.origin && <p className="text-red-500 text-xs italic -mt-4 mb-4">{errors.origin}</p>}
+              
+              <SelectField label="ต้นทาง (เขต/อำเภอ)" name="originDistrict" options={originDistricts} value={form.originDistrict} onChange={handleChange} disabled={!form.origin} />
+
+              <SelectField label="ปลายทาง (จังหวัด)" name="destination" options={provinces} required={true} value={form.destination} onChange={handleChange} />
+              {errors.destination && <p className="text-red-500 text-xs italic -mt-4 mb-4">{errors.destination}</p>}
+              
+              <SelectField label="ปลายทาง (เขต/อำเภอ)" name="destinationDistrict" options={destinationDistricts} value={form.destinationDistrict} onChange={handleChange} disabled={!form.destination} />
+              
+              <InputField label="ประเภทสินค้า" name="productType" placeholder="สินค้าทั่วไป, เครื่องจักร, ฯลฯ" required={true} error={errors.productType} value={form.productType} onChange={handleChange} />
+              <InputField label="น้ำหนักสินค้า (กิโลกรัม)" name="weight" type="number" placeholder="เป็นตัวเลขเท่านั้น" required={true} error={errors.weight} value={form.weight} onChange={handleChange} />
               <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-semibold mb-2">
-                  รายละเอียดอื่นๆ (มีไม่มีก็ได้)
-                </label>
-                <textarea
-                  name="otherDetails"
-                  value={form.otherDetails}
-                  onChange={handleChange}
-                  className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200"
-                  rows="4"
-                  placeholder="รายละเอียดเพิ่มเติม"
-                ></textarea>
+                <label className="block text-gray-700 text-sm font-semibold mb-2">รายละเอียดอื่นๆ (มีไม่มีก็ได้)</label>
+                <textarea name="otherDetails" value={form.otherDetails} onChange={handleChange} className="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" rows="4" placeholder="รายละเอียดเพิ่มเติม"></textarea>
               </div>
+              <InputField label="ปริมาณเที่ยววิ่งต่อเดือน" name="tripsPerMonth" type="text" placeholder="เช่น 10-20 เที่ยว" required={true} error={errors.tripsPerMonth} value={form.tripsPerMonth} onChange={handleChange} />
               <div className="flex justify-center mt-8 space-x-4">
-                <button
-                  type="submit"
-                  className="px-8 py-3 bg-gradient-to-r from-teal-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-teal-600 hover:to-green-700 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50"
-                >
+                <button type="submit" className="px-8 py-3 bg-gradient-to-r from-teal-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-teal-600 hover:to-green-700 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50">
                   เพิ่มข้อมูลการขนส่งนี้
                 </button>
               </div>
             </form>
-            {message && (
-              <div className="mt-6 p-4 rounded-xl text-center bg-green-100 text-green-800 shadow-inner animate-fade-in">
-                {message}
-              </div>
-            )}
+            {message && <div className="mt-6 p-4 rounded-xl text-center bg-green-100 text-green-800 shadow-inner animate-fade-in">{message}</div>}
             {jobDetails.length > 0 && (
               <div className="mt-8 w-full">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">รายการที่เพิ่มแล้ว</h3>
@@ -404,14 +390,12 @@
                         <p><strong>รายการที่ {index + 1}:</strong></p>
                         <p>ประเภทรถ: {job.vehicleType1} / {job.vehicleType2}</p>
                         <p>ประเภทการขนส่ง: {job.shippingType}</p>
-                        <p>เส้นทาง: {job.origin} &rarr; {job.destination}</p>
+                        <p>เส้นทาง: {job.origin} ({job.originDistrict}) &rarr; {job.destination} ({job.destinationDistrict})</p>
                         <p>ประเภทสินค้า: {job.productType} ({job.weight} กก.)</p>
                         {job.otherDetails && <p>รายละเอียดอื่นๆ: {job.otherDetails}</p>}
+                        {job.tripsPerMonth && <p>ปริมาณเที่ยววิ่ง: {job.tripsPerMonth}</p>}
                       </div>
-                      <button
-                        onClick={() => handleRemoveJob(index)}
-                        className="mt-4 md:mt-0 px-4 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400"
-                      >
+                      <button onClick={() => handleRemoveJob(index)} className="mt-4 md:mt-0 px-4 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400">
                         ลบ
                       </button>
                     </div>
@@ -432,24 +416,22 @@
         );
       };
 
+      // Submission Success Component
       const SubmissionSuccess = () => (
         <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-2xl max-w-2xl mx-auto my-12 animate-fade-in">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">ส่งข้อมูลเรียบร้อยแล้ว!</h2>
-          <p className="text-lg text-gray-700 mb-6">
-            เจ้าหน้าที่กำลังดำเนินการตรวจสอบข้อมูลของคุณ ก่อนเพิ่มในหน้าค้นหางานประมูล
-          </p>
-          <p className="text-md text-gray-700">
-            ขอบคุณที่ใช้บริการ บริษัท เอส เอส แอล โลจิสติกส์ ครับ
-          </p>
+          <p className="text-lg text-gray-700 mb-6">เจ้าหน้าที่กำลังดำเนินการตรวจสอบข้อมูลของคุณ ก่อนเพิ่มในหน้าค้นหางานประมูล</p>
+          <p className="text-md text-gray-700">ขอบคุณที่ใช้บริการ บริษัท เอส เอส แอล โลจิสติกส์ ครับ</p>
         </div>
       );
 
+      // Main return for App
       return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 font-kanit antialiased">
-          <div className="p-6 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-2 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 antialiased">
+          <div className="p-4 bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-lg mb-4 rounded-b-2xl animate-fade-in max-w-2xl mx-auto">
               <div className="text-center">
                   <h1 className="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">ฝากโพสประมูลงาน</h1>
-                  <p className="text-lg md:text-xl font-semibold text-green-700">ฝากประมูลงานขนส่งกับผู้รับเหมาทั่วประเทศ ผ่าน บริษัท เอส เอส แอล โลจิสติกส์ ได้ทีนี่</p>
+                  <p className="text-lg md:text-xl font-semibold text-green-700">ฝากประมูลงานขนส่งกับผู้รับเหมาทั่วประเทศ <br/> ผ่าน บริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</p>
               </div>
           </div>
           <div className="container mx-auto p-4">
@@ -463,10 +445,10 @@
     };
 
     ReactDOM.render(<App />, document.getElementById('root'));
-
   </script>
 </body>
 </html>
+
 
 
 
