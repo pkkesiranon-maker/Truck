@@ -253,8 +253,8 @@
             // --- Data Loading from CSV File ---
             const csvData = `ประทับเวลา,ชื่อบริษัท ,  ชื่อผู้ติดต่อ  ,  เบอร์โทรศัพท์  ,  E-mail  ,  ประเภทรถ 1  ,  ประเภทรถ 2  ,  ประเภทการขนส่ง  ,  ต้นทาง (จังหวัด)  ,  ต้นทาง (เขต/อำเภอ)  ,  ปลายทาง (จังหวัด)  ,ปลายทาง (เขต/อำเภอ),ประเภทสินค้า,  น้ำหนักสินค้า (กิโลกรัม)  ,  รายละเอียดอื่นๆ  ,  ปริมาณเที่ยววิ่งต่อเดือน  
 2025-08-23 22:48:20,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,กรุงเทพมหานคร,ยานนาวา,อุปโภค,2000,ขึ้นเอง ลงเอง,10
-2025-08-23 22:55:08,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ชลบุรี,พานทอง,อุปโภค,2000,ขึ้นเอง ลงเอง,5
-2025-08-23 23:30:01,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ปทุมธานี,คลองหลวง,อุปโภค,2000,ขึ้นเอง ลงเอง,15`;
+2025-08-23 22:55:08,Efficient Logistics,Panupong K.,0947841511,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ชลบุรี,พานทอง,อุปโภค,2000,ขึ้นเอง ลงเอง,5
+2025-08-23 23:30:01,Sripong Logistics,Panupong K.,0981458842,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ปทุมธานี,คลองหลวง,อุปโภค,2000,ขึ้นเอง ลงเอง,15`;
 
             function parseCSV(data) {
                 const rows = data.trim().split('\n').slice(1); // Trim, split by new line, and skip header
@@ -263,6 +263,7 @@
                     // Mapping based on the provided CSV structure
                     return {
                         company: columns[1], // Column B
+                        contactPhone: columns[3], // Column D
                         vehicleType1: columns[5], // Column F
                         vehicleType2: columns[6], // Column G
                         jobType: columns[7], // Column H
@@ -334,25 +335,31 @@
             }
 
             function updateButtons() {
-                prevBtn.style.display = (currentStep === 1) ? 'none' : 'inline-block';
-                
+                // Button visibility
+                prevBtn.style.display = (currentStep === 1 || currentStep === 2 || currentStep === 5) ? 'none' : 'inline-block';
                 const isLastStep = currentStep === 5;
                 nextBtn.style.display = isLastStep ? 'none' : 'inline-block';
                 submitBtn.style.display = isLastStep ? 'flex' : 'none';
 
-                navContainer.classList.remove('justify-center', 'justify-between');
+                // Button container alignment
+                navContainer.classList.remove('justify-center', 'justify-between', 'justify-end');
+                if (currentStep === 1 || currentStep === 5) {
+                    navContainer.classList.add('justify-center');
+                } else if (currentStep === 2) {
+                    navContainer.classList.add('justify-end');
+                } else { // Steps 3 and 4
+                    navContainer.classList.add('justify-between');
+                }
+
+                // Button text content
                 if (currentStep === 1) {
                     nextBtnText.textContent = 'ยอมรับเงื่อนไขการประมูล';
-                    navContainer.classList.add('justify-center');
                 } else if (currentStep === 3) {
                     nextBtnText.textContent = 'เลือกงานประมูล';
-                    navContainer.classList.add('justify-between');
                 } else if (currentStep === 4) {
-                    nextBtnText.textContent = 'ยืนยันการโอนเงิน';
-                    navContainer.classList.add('justify-between');
+                    nextBtnText.textContent = 'ยืนยันการชำระเงิน';
                 } else {
                     nextBtnText.textContent = 'ถัดไป';
-                    navContainer.classList.add('justify-between');
                 }
             }
 
@@ -467,6 +474,10 @@
                                 </div>
                             </div>
                             <div class="p-4">
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mb-4 border-b pb-4">
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg><div><strong class="font-medium">บริษัท:</strong> ${item.company}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg><div><strong class="font-medium">เบอร์ติดต่อ:</strong> ${item.contactPhone}</div></div>
+                                </div>
                                 <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mb-4">
                                     <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1-1h-1v6a1 1 0 001 1h1a1 1 0 001-1V7a1 1 0 00-1-1z" /></svg><div><strong class="font-medium">ประเภทรถ:</strong> ${vehicle}</div></div>
                                     <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg><div><strong class="font-medium">การขนส่ง:</strong> ${item.jobType}</div></div>
