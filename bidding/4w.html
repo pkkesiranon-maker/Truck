@@ -157,7 +157,7 @@
 
             <!-- Step 3: Job Selection -->
             <section id="step-3" class="step">
-                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-green-700">เลือกงานประมูล</h2>
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-green-700">รายการงานประมูล</h2>
                 <div id="job-selection-error-container" class="mb-4"></div>
                 <div id="auction-cards-container" class="space-y-6">
                     <!-- Auction cards for selection will be dynamically inserted here -->
@@ -248,20 +248,48 @@
             let slipFile = null;
             let step4LoadTime = null;
             let countdownInterval = null;
+            let auctionData = [];
 
-            // --- Auction Data ---
-            const auctionData = [
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "ขอนแก่น", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "ชลบุรี", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "สมุทรปราการ", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "เชียงใหม่", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "ภูเก็ต", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "สุราษฎร์ธานี", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "" },
-                { company: "บริษัท ปลูกผักเพราะรักแม่ จำกัด", vehicleType1: "4 ล้อ", vehicleType2: "ตู้", jobType: "เหมาเที่ยว", origin: "กรุงเทพมหานคร", destination: "สงขลา", productType: "สินค้าอุปโภคบริโภค", weightKg: 1500, details: "ต้องการรถด่วน" }
-            ];
+            // --- Data Loading from CSV File ---
+            const csvData = `ประทับเวลา,ชื่อบริษัท ,  ชื่อผู้ติดต่อ  ,  เบอร์โทรศัพท์  ,  E-mail  ,  ประเภทรถ 1  ,  ประเภทรถ 2  ,  ประเภทการขนส่ง  ,  ต้นทาง (จังหวัด)  ,  ต้นทาง (เขต/อำเภอ)  ,  ปลายทาง (จังหวัด)  ,ปลายทาง (เขต/อำเภอ),ประเภทสินค้า,  น้ำหนักสินค้า (กิโลกรัม)  ,  รายละเอียดอื่นๆ  ,  ปริมาณเที่ยววิ่งต่อเดือน  
+2025-08-23 22:48:20,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,กรุงเทพมหานคร,ยานนาวา,อุปโภค,2000,ขึ้นเอง ลงเอง,10
+2025-08-23 22:55:08,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ชลบุรี,พานทอง,อุปโภค,2000,ขึ้นเอง ลงเอง,5
+2025-08-23 23:30:01,SSL Logistics,Panupong K.,0619979525,pk.kesiranon@gmail.com,4 ล้อ,ตู้,เหมาเที่ยว,สมุทรปราการ,เมืองสมุทรปราการ,ปทุมธานี,คลองหลวง,อุปโภค,2000,ขึ้นเอง ลงเอง,15`;
+
+            function parseCSV(data) {
+                const rows = data.trim().split('\n').slice(1); // Trim, split by new line, and skip header
+                return rows.map(row => {
+                    const columns = row.split(',').map(col => col.trim());
+                    // Mapping based on the provided CSV structure
+                    return {
+                        company: columns[1], // Column B
+                        vehicleType1: columns[5], // Column F
+                        vehicleType2: columns[6], // Column G
+                        jobType: columns[7], // Column H
+                        originProvince: columns[8], // Column I
+                        originDistrict: columns[9], // Column J
+                        destinationProvince: columns[10], // Column K
+                        destinationDistrict: columns[11], // Column L
+                        productType: columns[12], // Column M
+                        weightKg: columns[13], // Column N
+                        details: columns[14], // Column O
+                        tripsPerMonth: columns[15], // Column P
+                        distanceKm: estimateDistance(columns[8], columns[10])
+                    };
+                }).filter(row => row.vehicleType1); // Filter out any potentially empty rows
+            }
+
+            function estimateDistance(origin, dest) {
+                const key = `${origin}-${dest}`;
+                const distances = {
+                    "สมุทรปราการ-กรุงเทพมหานคร": 30,
+                    "สมุทรปราการ-ชลบุรี": 60,
+                    "สมุทรปราการ-ปทุมธานี": 55,
+                };
+                return distances[key] || 100; // Default distance
+            }
 
             // --- Functions ---
-
             function startCountdown() {
                 const fiveMinutes = 5 * 60 * 1000;
                 const deadline = new Date().getTime() + fiveMinutes;
@@ -347,24 +375,35 @@
                 container.innerHTML = ''; 
                 auctionData.forEach((item, index) => {
                     const vehicle = `${item.vehicleType1} ${item.vehicleType2}`;
+                    const origin = `${item.originProvince} (${item.originDistrict})`;
+                    const destination = `${item.destinationProvince} (${item.destinationDistrict})`;
                     const card = `
                         <div class="job-card bg-white border border-gray-200 rounded-lg shadow-sm transition hover:shadow-lg overflow-hidden" data-index="${index}">
                             <div class="bg-green-100 p-3 border-b border-green-200">
-                                <div class="flex items-center text-gray-700">
-                                    <span class="font-bold text-lg text-green-800">${item.origin}</span>
+                                <div class="flex items-center justify-between text-gray-700">
+                                    <span class="font-bold text-lg text-green-800">${origin}</span>
+                                    <div class="flex-grow border-t-2 border-dotted border-gray-400 mx-4"></div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                          <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0l-1.5-1.5a2 2 0 112.828-2.828l1.5 1.5 3-3a2 2 0 012.828 0z" clip-rule="evenodd" />
+                                          <path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12A6 6 0 0010 4z" clip-rule="evenodd" />
+                                        </svg>
+                                        ~${item.distanceKm} กม.
+                                    </div>
                                     <div class="flex-grow border-t-2 border-dotted border-gray-400 mx-4"></div>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1 text-red-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-                                    <span class="font-bold text-lg text-green-800">${item.destination}</span>
+                                    <span class="font-bold text-lg text-green-800">${destination}</span>
                                 </div>
                             </div>
                             <div class="p-4">
-                                <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mb-4">
                                     <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1-1h-1v6a1 1 0 001 1h1a1 1 0 001-1V7a1 1 0 00-1-1z" /></svg><div><strong class="font-medium">ประเภทรถ:</strong> ${vehicle}</div></div>
                                     <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg><div><strong class="font-medium">การขนส่ง:</strong> ${item.jobType}</div></div>
                                     <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /><path d="M2 12a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z" /></svg><div><strong class="font-medium">ประเภทสินค้า:</strong> ${item.productType}</div></div>
-                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg><div><strong class="font-medium">น้ำหนัก (กก.):</strong> ${item.weightKg.toLocaleString()}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg><div><strong class="font-medium">น้ำหนัก (กก.):</strong> ${parseInt(item.weightKg).toLocaleString()}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg><div><strong class="font-medium">เที่ยววิ่ง/เดือน:</strong> ${item.tripsPerMonth}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg><div><strong class="font-medium">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</div></div>
                                 </div>
-                                <div class="text-sm text-gray-600 flex items-center col-span-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg><div><strong class="font-medium">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</div></div>
                             </div>
                             <div class="p-4 bg-gray-50 flex flex-col items-center">
                                 <button class="select-job-btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 w-full max-w-xs">
@@ -391,7 +430,7 @@
                     totalFee += fee;
                     const summaryItem = `
                         <div class="flex justify-between items-center text-gray-700">
-                            <span>- ${item.origin} ไป ${item.destination} (${item.vehicleType1})</span>
+                            <span>- ${item.originProvince} ไป ${item.destinationProvince} (${item.vehicleType1})</span>
                             <span class="font-medium">${fee} บาท</span>
                         </div>
                     `;
@@ -407,35 +446,39 @@
                 selectedJobIndices.forEach(index => {
                     const item = auctionData[index];
                     const vehicle = `${item.vehicleType1} ${item.vehicleType2}`;
+                    const origin = `${item.originProvince} (${item.originDistrict})`;
+                    const destination = `${item.destinationProvince} (${item.destinationDistrict})`;
                     const card = `
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden" data-index="${index}">
+                        <div class="job-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden" data-index="${index}">
                             <div class="bg-green-100 p-3 border-b border-green-200">
-                                <div class="flex items-center text-gray-700">
-                                    <span class="font-bold text-lg text-green-800">${item.origin}</span>
+                                <div class="flex items-center justify-between text-gray-700">
+                                    <span class="font-bold text-lg text-green-800">${origin}</span>
+                                    <div class="flex-grow border-t-2 border-dotted border-gray-400 mx-4"></div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                          <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0l-1.5-1.5a2 2 0 112.828-2.828l1.5 1.5 3-3a2 2 0 012.828 0z" clip-rule="evenodd" />
+                                          <path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12A6 6 0 0010 4z" clip-rule="evenodd" />
+                                        </svg>
+                                        ~${item.distanceKm} กม.
+                                    </div>
                                     <div class="flex-grow border-t-2 border-dotted border-gray-400 mx-4"></div>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1 text-red-600" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-                                    <span class="font-bold text-lg text-green-800">${item.destination}</span>
+                                    <span class="font-bold text-lg text-green-800">${destination}</span>
                                 </div>
                             </div>
-                            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                                <!-- Left Side: Details -->
-                                <div class="md:col-span-2 space-y-3">
-                                    <div class="text-sm text-gray-600">
-                                        <strong class="font-medium">บริษัทเจ้าของงาน:</strong> ${item.company}
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-4 text-sm">
-                                        <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1-1h-1v6a1 1 0 001 1h1a1 1 0 001-1V7a1 1 0 00-1-1z" /></svg><div><strong class="font-medium">ประเภทรถ:</strong> ${vehicle}</div></div>
-                                        <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg><div><strong class="font-medium">การขนส่ง:</strong> ${item.jobType}</div></div>
-                                        <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /><path d="M2 12a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z" /></svg><div><strong class="font-medium">ประเภทสินค้า:</strong> ${item.productType}</div></div>
-                                        <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg><div><strong class="font-medium">น้ำหนัก (กก.):</strong> ${item.weightKg.toLocaleString()}</div></div>
-                                    </div>
-                                    <div class="text-sm text-gray-600 col-span-2 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg><div><strong class="font-medium">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</div></div>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mb-4">
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /><path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1-1h-1v6a1 1 0 001 1h1a1 1 0 001-1V7a1 1 0 00-1-1z" /></svg><div><strong class="font-medium">ประเภทรถ:</strong> ${vehicle}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg><div><strong class="font-medium">การขนส่ง:</strong> ${item.jobType}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" /><path d="M2 12a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z" /></svg><div><strong class="font-medium">ประเภทสินค้า:</strong> ${item.productType}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg><div><strong class="font-medium">น้ำหนัก (กก.):</strong> ${parseInt(item.weightKg).toLocaleString()}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg><div><strong class="font-medium">เที่ยววิ่ง/เดือน:</strong> ${item.tripsPerMonth}</div></div>
+                                    <div class="flex items-center text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg><div><strong class="font-medium">รายละเอียดอื่นๆ:</strong> ${item.details || '-'}</div></div>
                                 </div>
-                                <!-- Right Side: Bidding Input -->
-                                <div class="flex flex-col items-center justify-center bg-gray-50 p-4 rounded-lg h-full">
-                                    <label for="bid_price_${index}" class="font-bold text-gray-800 mb-2 block text-center">ราคาที่เสนอ (บาท)</label>
-                                    <input type="number" id="bid_price_${index}" name="bid_price_${index}" class="w-full max-w-xs text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-lg font-bold" placeholder="0.00" min="1" required>
-                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 flex flex-col items-center">
+                                <label for="bid_price_${index}" class="font-bold text-gray-800 mb-2 block text-center">ราคาที่เสนอ (บาท)</label>
+                                <input type="number" id="bid_price_${index}" name="bid_price_${index}" class="w-full max-w-xs text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-lg font-bold" placeholder="0.00" min="1" required>
                             </div>
                         </div>
                     `;
@@ -650,6 +693,7 @@
             });
             
             // --- Initialization ---
+            auctionData = parseCSV(csvData);
             showStep(currentStep);
             populateAuctionCards();
         });
@@ -657,4 +701,3 @@
 
 </body>
 </html>
-
