@@ -3,46 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สมัครสมาชิกร่วมวิ่งงาน</title>
-    <!-- Tailwind CSS CDN -->
+    <title>สมัครสมาชิกร่วมวิ่งงาน - SSL Logistics</title>
+    
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Kanit -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Using Kanit font as the default */
+        /* Use Sarabun font for Thai text and Inter for English */
         body {
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Sarabun', 'Inter', sans-serif;
+        }
+        /* Simple animation for new vehicle entry */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+<body class="bg-green-50 flex items-center justify-center min-h-screen p-4">
 
-    <div class="container bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">สมัครสมาชิกร่วมวิ่งงาน</h1>
-            <h2 class="text-lg text-gray-600 mt-2">สมัครร่วมงานบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</h2>
-        </div>
-        
-        <form id="registrationForm" class="space-y-6">
+    <div class="w-full max-w-3xl">
+        <!-- Registration Form Container -->
+        <div id="form-container" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
             
-            <!-- Section 1: Personal Information -->
-            <fieldset>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="form-group">
-                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
-                        <input type="text" id="fullName" name="entry.287163873" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" name="entry.1929394666" required maxlength="10" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
-                    </div>
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">สมัครสมาชิกร่วมวิ่งงาน</h1>
+                <p class="text-gray-600 mt-2">สมัครร่วมงานกับบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</p>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registration-form" class="space-y-6">
+
+                <!-- Full Name -->
+                <div>
+                    <label for="full-name" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ-นามสกุล <span class="text-red-500">*</span></label>
+                    <input type="text" id="full-name" name="fullName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" placeholder="ตัวอย่าง: สมชาย ใจดี" required>
                 </div>
 
-                <div class="form-group mt-6">
-                    <label for="province" class="block text-sm font-medium text-gray-700 mb-1">จังหวัด</label>
-                    <select id="province" name="entry.1641413677" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition bg-white">
-                        <option value="">เลือกจังหวัด</option>
+                <!-- Phone Number -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" placeholder="ตัวอย่าง: 0812345678" required maxlength="10">
+                </div>
+
+                <!-- Province -->
+                <div>
+                    <label for="province" class="block text-sm font-medium text-gray-700 mb-1">จังหวัด <span class="text-red-500">*</span></label>
+                    <select id="province" name="province" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                        <option value="" disabled selected>-- กรุณาเลือกจังหวัด --</option>
+                        <!-- List of Thai provinces -->
                         <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
                         <option value="กระบี่">กระบี่</option>
                         <option value="กาญจนบุรี">กาญจนบุรี</option>
@@ -122,135 +140,204 @@
                         <option value="อุบลราชธานี">อุบลราชธานี</option>
                     </select>
                 </div>
-            </fieldset>
 
-            <hr class="border-gray-200">
-
-            <!-- Section 2: Transportation Details -->
-            <fieldset class="space-y-6">
+                <!-- Transport Type -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทการขนส่ง</label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.895767174" value="เหมาเที่ยว" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทการขนส่ง <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                            <input type="checkbox" name="transportType" value="เหมาเที่ยว" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                             <span class="ml-3 text-sm text-gray-700">เหมาเที่ยว</span>
                         </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.895767174" value="กระจายสินค้า" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                        <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                            <input type="checkbox" name="transportType" value="กระจายสินค้า" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                             <span class="ml-3 text-sm text-gray-700">กระจายสินค้า</span>
                         </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.895767174" value="Express" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                        <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                            <input type="checkbox" name="transportType" value="Express" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
                             <span class="ml-3 text-sm text-gray-700">Express</span>
                         </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.895767174" value="Cross border" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">Cross border</span>
+                        <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                            <input type="checkbox" name="transportType" value="Cross Border" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                            <span class="ml-3 text-sm text-gray-700">Cross Border</span>
                         </label>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทรถ 1</label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.1528054360" value="4W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">4W</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.1528054360" value="6W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">6W</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.1528054360" value="10W" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">10W</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.1528054360" value="เทรลเลอร์" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">เทรลเลอร์</span>
-                        </label>
+                <!-- Dynamic Vehicle Types Section -->
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">ประเภทรถขนส่ง <span class="text-red-500">*</span></h3>
+                        <button type="button" id="add-vehicle-btn" class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-lg hover:bg-green-200 transition">
+                            + เพิ่มประเภทรถ
+                        </button>
+                    </div>
+                    <div id="vehicle-types-container" class="space-y-4">
+                        <!-- Dynamic vehicle entries will be added here -->
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">ประเภทรถ 2</label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.839458641" value="พื้นเรียบ" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">พื้นเรียบ</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.839458641" value="คอก" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">คอก</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.839458641" value="ตู้" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">ตู้</span>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 hover:border-green-400 transition">
-                            <input type="radio" name="entry.839458641" value="ตู้เย็น" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm text-gray-700">ตู้เย็น</span>
-                        </label>
-                    </div>
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 px-4 rounded-lg hover:from-green-600 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300 ease-in-out disabled:bg-gray-400">
+                        ส่งข้อมูลการสมัคร
+                    </button>
                 </div>
-            </fieldset>
+            </form>
             
-            <button type="submit" class="w-full py-3 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition">
-                สมัครสมาชิก
-            </button>
-        </form>
-        
-        <!-- Status message container -->
-        <div id="statusMessage" class="text-center mt-6 font-medium"></div>
+            <!-- Status Message Area (for errors) -->
+            <div id="status-message" class="mt-6 text-center"></div>
+
+        </div>
+
+        <!-- Success Message Container (Initially Hidden) -->
+        <div id="success-container" class="bg-white p-8 sm:p-12 rounded-2xl shadow-lg text-center hidden">
+            
+            <!-- Success Icon -->
+            <div class="mx-auto mb-6 flex items-center justify-center h-20 w-20 rounded-full bg-green-100">
+                <svg class="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <!-- Success Message -->
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">สมัครเรียบร้อยแล้ว!</h1>
+            <p class="text-gray-600 mt-3">ขอบคุณสำหรับข้อมูล ทางเราจะติดต่อกลับไปโดยเร็วที่สุด</p>
+
+        </div>
     </div>
 
+
     <script>
-        const form = document.getElementById('registrationForm');
-        const statusMessage = document.getElementById('statusMessage');
-        const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd-kqNgGsxB2g0tzBjFU7GQkUwVQkunK4Z1XA07JsQ8vYIRuA/formResponse';
+        // --- IMPORTANT: Google Apps Script URL ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgRiVb320h8oLZQ9ZbTwVN4nQjdRz5tS9R8PhPVLreHCzAXRMiF_65Zzkxo6q4m_Ldcg/exec'; 
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
+        // --- Element References ---
+        const formContainer = document.getElementById('form-container');
+        const successContainer = document.getElementById('success-container');
+        const form = document.getElementById('registration-form');
+        const phoneInput = document.getElementById('phone');
+        const addVehicleBtn = document.getElementById('add-vehicle-btn');
+        const vehicleContainer = document.getElementById('vehicle-types-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusMessage = document.getElementById('status-message');
+        let vehicleCount = 0;
 
-            const fullName = document.querySelector('input[name="entry.287163873"]').value;
-            const phone = document.querySelector('input[name="entry.1929394666"]').value;
+        // --- Event Listeners ---
+        phoneInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+        addVehicleBtn.addEventListener('click', addVehicleType);
+        form.addEventListener('submit', handleSubmit);
+        vehicleContainer.addEventListener('click', (e) => {
+            if (e.target && e.target.classList.contains('remove-vehicle-btn')) {
+                e.target.closest('.vehicle-entry').remove();
+            }
+        });
 
-            if (!fullName || !phone) {
-                statusMessage.className = 'text-red-600'; // Tailwind class for error color
-                statusMessage.textContent = 'กรุณากรอกข้อมูลในช่องที่จำเป็นให้ครบถ้วน';
+        // --- Functions ---
+        function addVehicleType() {
+            vehicleCount++;
+            const newVehicleEntry = document.createElement('div');
+            newVehicleEntry.className = 'vehicle-entry grid grid-cols-1 sm:grid-cols-10 gap-4 items-center p-4 border rounded-lg bg-gray-50 fade-in';
+            newVehicleEntry.innerHTML = `
+                <div class="sm:col-span-4">
+                    <label for="main-type-${vehicleCount}" class="block text-xs font-medium text-gray-600 mb-1">ประเภทรถ (หลัก)</label>
+                    <select id="main-type-${vehicleCount}" name="mainVehicleType" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" required>
+                        <option value="4 ล้อ">4 ล้อ</option>
+                        <option value="6 ล้อ">6 ล้อ</option>
+                        <option value="10 ล้อ">10 ล้อ</option>
+                        <option value="เทรลเลอร์">เทรลเลอร์</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-4">
+                    <label for="sub-type-${vehicleCount}" class="block text-xs font-medium text-gray-600 mb-1">ประเภทรถ (ย่อย)</label>
+                    <select id="sub-type-${vehicleCount}" name="subVehicleType" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" required>
+                        <option value="พื้นเรียบ">พื้นเรียบ</option>
+                        <option value="คอก">คอก</option>
+                        <option value="ตู้">ตู้</option>
+                        <option value="ตู้เย็น">ตู้เย็น</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-2 text-right">
+                     <label class="block text-xs font-medium text-gray-600 mb-1 sm:invisible">ลบ</label>
+                    <button type="button" class="remove-vehicle-btn px-3 py-2 bg-red-100 text-red-700 text-sm font-semibold rounded-lg hover:bg-red-200 transition w-full sm:w-auto">
+                        ลบ
+                    </button>
+                </div>
+            `;
+            vehicleContainer.appendChild(newVehicleEntry);
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            // Validation for vehicle types
+            if (vehicleContainer.children.length === 0) {
+                showMessage('กรุณาเพิ่มประเภทรถอย่างน้อย 1 ประเภท');
                 return;
             }
 
-            statusMessage.className = 'text-gray-600'; // Tailwind class for info color
-            statusMessage.textContent = 'กำลังส่งข้อมูล...';
-            
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-
-            // Iterate over all form entries and append them to the URLSearchParams
-            for (const pair of formData.entries()) {
-                params.append(pair[0], pair[1]);
+            // Validation for transport types
+            const selectedTransportTypes = Array.from(form.querySelectorAll('input[name="transportType"]:checked'));
+            if (selectedTransportTypes.length === 0) {
+                showMessage('กรุณาเลือกประเภทการขนส่งอย่างน้อย 1 ประเภท');
+                return;
             }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'กำลังส่งข้อมูล...';
+            showMessage('');
+
+            const vehicleEntries = document.querySelectorAll('.vehicle-entry');
+            const vehicles = Array.from(vehicleEntries).map(entry => {
+                const mainType = entry.querySelector('select[name="mainVehicleType"]').value;
+                const subType = entry.querySelector('select[name="subVehicleType"]').value;
+                return `${mainType} (${subType})`;
+            });
+            
+            const transportTypeValues = selectedTransportTypes.map(checkbox => checkbox.value);
+
+            const formDataObject = {
+                timestamp: new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                fullName: document.getElementById('full-name').value,
+                phone: document.getElementById('phone').value,
+                province: document.getElementById('province').value,
+                transportType: transportTypeValues.join(', '),
+                vehicles: vehicles.join(', ')
+            };
 
             try {
-                // Fetch request to submit the form data to Google Forms
-                await fetch(formUrl, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: params,
-                    mode: 'no-cors' // Important for submitting to Google Forms
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    redirect: 'follow',
+                    body: JSON.stringify(formDataObject),
                 });
-                
-                statusMessage.className = 'text-green-600'; // Tailwind class for success color
-                statusMessage.textContent = 'การสมัครสำเร็จแล้ว! ขอบคุณที่เข้าร่วม';
-                form.reset();
-            } catch (error) {
-                console.error('Submission error:', error);
-                statusMessage.className = 'text-red-600'; // Tailwind class for error color
-                statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองอีกครั้ง';
-            }
-        });
-    </script>
 
+                // Hide form and show success message
+                formContainer.classList.add('hidden');
+                successContainer.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showMessage('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+                // Re-enable the button only if there's an error
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'ส่งข้อมูลการสมัคร';
+            }
+        }
+        
+        function showMessage(message) {
+            statusMessage.textContent = message;
+            statusMessage.className = `mt-6 text-center font-semibold text-red-600`;
+        }
+
+        // Add one vehicle type section by default
+        addVehicleType();
+
+    </script>
+    
 </body>
 </html>
-
