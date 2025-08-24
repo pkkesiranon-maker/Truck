@@ -7,329 +7,269 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Kanit', sans-serif;
         }
-        .form-group label {
-            transition: all 0.2s ease-in-out;
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        .form-group input:focus + label,
-        .form-group select:focus + label,
-        .form-group textarea:focus + label {
-            color: #10B981;
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out;
         }
     </style>
 </head>
-<body class="bg-emerald-50 text-gray-800 flex justify-center items-center min-h-screen py-12 px-4">
+<body class="bg-gradient-to-br from-green-50 to-emerald-100 flex justify-center items-center min-h-screen py-12 px-4 antialiased">
 
     <!-- Main form container -->
-    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl w-full max-w-2xl transform transition-all duration-300">
-        <h1 class="text-3xl md:text-4xl font-bold text-center text-emerald-700 mb-2">ฝากโพสต์งานด่วน</h1>
-        <h2 class="text-xl md:text-2xl font-semibold text-center text-emerald-600 mb-8">ฝากหารถกับบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</h2>
+    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-2xl animate-fade-in">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">ฝากโพสต์งานด่วน</h1>
+            <p class="text-lg md:text-xl font-semibold text-green-700">ฝากหารถกับบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</p>
+        </div>
         
-        <!-- Note about required fields -->
-        <p class="text-center text-sm text-gray-500 mb-6"><span class="text-red-500">*</span> หมายถึงข้อมูลที่จำเป็นต้องกรอก</p>
-
         <!-- Status Message Display -->
         <div id="statusMessage" class="p-4 rounded-lg text-center mb-6 hidden"></div>
 
-        <form id="urgentJobForm" action="https://docs.google.com/forms/d/e/1FAIpQLSew1N0icB9xtVky4ek4SpUL4LoA84UJlPvBg_BzyLSrcG83ig/formResponse" method="POST" class="space-y-6">
+        <form id="urgentJobForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdyJJUrICH8DgZzcD4nbuRIjYi1cnpYngkjfGoWONfWu4930A/formResponse" method="POST" class="space-y-4">
             
             <!-- Field 1: Name -->
-            <div class="form-group relative">
-                <label for="name" class="block text-sm font-medium text-gray-600 mb-1">ชื่อ นามสกุล <span class="text-red-500">*</span></label>
-                <input type="text" id="name" name="entry.1363513965" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: สมชาย รักดี">
+            <div class="form-group">
+                <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">ชื่อ นามสกุล <span class="text-red-500">*</span></label>
+                <input type="text" id="name" name="entry.1526416338" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: สมชาย รักดี">
             </div>
             
             <!-- Field 2: Phone Number -->
-            <div class="form-group relative">
-                <label for="phone" class="block text-sm font-medium text-gray-600 mb-1">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
-                <input type="tel" id="phone" name="entry.407952778" required maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: 0812345678">
+            <div class="form-group">
+                <label for="phone" class="block text-gray-700 text-sm font-semibold mb-2">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+                <input type="tel" id="phone" name="entry.958873956" required maxlength="10" class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: 0812345678">
             </div>
             
-            <!-- Field 3: Start Date -->
-            <div class="form-group relative">
-                <label for="date" class="block text-sm font-medium text-gray-600 mb-1">วันที่ขึ้นงาน <span class="text-red-500">*</span></label>
-                <input type="date" id="date" name="entry.571402420" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+            <!-- Date Fields -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Field 3: Start Date -->
+                <div class="form-group">
+                    <label for="date" class="block text-gray-700 text-sm font-semibold mb-2">วันที่ขึ้นงาน <span class="text-red-500">*</span></label>
+                    <input type="date" id="date" name="entry.2012156771" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                </div>
+                <!-- New Field: Post Date -->
+                <div class="form-group">
+                    <label for="postDate" class="block text-gray-700 text-sm font-semibold mb-2">วันที่ลงงาน <span class="text-red-500">*</span></label>
+                    <input type="date" id="postDate" name="entry.1200170161" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                </div>
+            </div>
+
+            <!-- Origin Fields -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Field 4: Origin Province -->
+                <div class="form-group">
+                    <label for="origin" class="block text-gray-700 text-sm font-semibold mb-2">ต้นทาง (จังหวัด) <span class="text-red-500">*</span></label>
+                    <select id="origin" name="entry.861210164" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                        <option value="">-- เลือกจังหวัด --</option>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <!-- New Field: Origin District -->
+                <div class="form-group">
+                    <label for="originDistrict" class="block text-gray-700 text-sm font-semibold mb-2">ต้นทาง (เขต/อำเภอ) <span class="text-red-500">*</span></label>
+                    <select id="originDistrict" name="entry.830064602" required disabled class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 disabled:bg-gray-100">
+                        <option value="">-- เลือกเขต/อำเภอ --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Destination Fields -->
+            <div class="grid md:grid-cols-2 gap-4">
+                 <!-- Field 5: Destination Province -->
+                <div class="form-group">
+                    <label for="destination" class="block text-gray-700 text-sm font-semibold mb-2">ปลายทาง (จังหวัด) <span class="text-red-500">*</span></label>
+                    <select id="destination" name="entry.891137244" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                        <option value="">-- เลือกจังหวัด --</option>
+                         <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <!-- New Field: Destination District -->
+                <div class="form-group">
+                    <label for="destinationDistrict" class="block text-gray-700 text-sm font-semibold mb-2">ปลายทาง (เขต/อำเภอ) <span class="text-red-500">*</span></label>
+                    <select id="destinationDistrict" name="entry.1914465123" required disabled class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200 disabled:bg-gray-100">
+                        <option value="">-- เลือกเขต/อำเภอ --</option>
+                    </select>
+                </div>
             </div>
             
-            <!-- Field 4: Origin Province -->
-            <div class="form-group relative">
-                <label for="origin" class="block text-sm font-medium text-gray-600 mb-1">ต้นทาง (จังหวัด) <span class="text-red-500">*</span></label>
-                <select id="origin" name="entry.940271320" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-                    <option value="">-- เลือกจังหวัดต้นทาง --</option>
-                    <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-                    <option value="กระบี่">กระบี่</option>
-                    <option value="กาญจนบุรี">กาญจนบุรี</option>
-                    <option value="กาฬสินธุ์">กาฬสินธุ์</option>
-                    <option value="กำแพงเพชร">กำแพงเพชร</option>
-                    <option value="ขอนแก่น">ขอนแก่น</option>
-                    <option value="จันทบุรี">จันทบุรี</option>
-                    <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
-                    <option value="ชลบุรี">ชลบุรี</option>
-                    <option value="ชัยนาท">ชัยนาท</option>
-                    <option value="ชัยภูมิ">ชัยภูมิ</option>
-                    <option value="ชุมพร">ชุมพร</option>
-                    <option value="เชียงราย">เชียงราย</option>
-                    <option value="เชียงใหม่">เชียงใหม่</option>
-                    <option value="ตรัง">ตรัง</option>
-                    <option value="ตราด">ตราด</option>
-                    <option value="ตาก">ตาก</option>
-                    <option value="นครนายก">นครนายก</option>
-                    <option value="นครปฐม">นครปฐม</option>
-                    <option value="นครพนม">นครพนม</option>
-                    <option value="นครราชสีมา">นครราชสีมา</option>
-                    <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
-                    <option value="นครสวรรค์">นครสวรรค์</option>
-                    <option value="นนทบุรี">นนทบุรี</option>
-                    <option value="นราธิวาส">นราธิวาส</option>
-                    <option value="น่าน">น่าน</option>
-                    <option value="บึงกาฬ">บึงกาฬ</option>
-                    <option value="บุรีรัมย์">บุรีรัมย์</option>
-                    <option value="ปทุมธานี">ปทุมธานี</option>
-                    <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
-                    <option value="ปราจีนบุรี">ปราจีนบุรี</option>
-                    <option value="ปัตตานี">ปัตตานี</option>
-                    <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
-                    <option value="พะเยา">พะเยา</option>
-                    <option value="พังงา">พังงา</option>
-                    <option value="พัทลุง">พัทลุง</option>
-                    <option value="พิจิตร">พิจิตร</option>
-                    <option value="พิษณุโลก">พิษณุโลก</option>
-                    <option value="เพชรบุรี">เพชรบุรี</option>
-                    <option value="เพชรบูรณ์">เพชรบูรณ์</option>
-                    <option value="แพร่">แพร่</option>
-                    <option value="ภูเก็ต">ภูเก็ต</option>
-                    <option value="มหาสารคาม">มหาสารคาม</option>
-                    <option value="มุกดาหาร">มุกดาหาร</option>
-                    <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
-                    <option value="ยโสธร">ยโสธร</option>
-                    <option value="ยะลา">ยะลา</option>
-                    <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
-                    <option value="ระนอง">ระนอง</option>
-                    <option value="ระยอง">ระยอง</option>
-                    <option value="ราชบุรี">ราชบุรี</option>
-                    <option value="ลพบุรี">ลพบุรี</option>
-                    <option value="ลำปาง">ลำปาง</option>
-                    <option value="ลำพูน">ลำพูน</option>
-                    <option value="เลย">เลย</option>
-                    <option value="ศรีสะเกษ">ศรีสะเกษ</option>
-                    <option value="สกลนคร">สกลนคร</option>
-                    <option value="สงขลา">สงขลา</option>
-                    <option value="สตูล">สตูล</option>
-                    <option value="สมุทรปราการ">สมุทรปราการ</option>
-                    <option value="สมุทรสงคราม">สมุทรสงคราม</option>
-                    <option value="สมุทรสาคร">สมุทรสาคร</option>
-                    <option value="สระแก้ว">สระแก้ว</option>
-                    <option value="สระบุรี">สระบุรี</option>
-                    <option value="สิงห์บุรี">สิงห์บุรี</option>
-                    <option value="สุโขทัย">สุโขทัย</option>
-                    <option value="สุพรรณบุรี">สุพรรณบุรี</option>
-                    <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
-                    <option value="สุรินทร์">สุรินทร์</option>
-                    <option value="หนองคาย">หนองคาย</option>
-                    <option value="หนองบัวลำภู">หนองบัวลำภู</option>
-                    <option value="อ่างทอง">อ่างทอง</option>
-                    <option value="อำนาจเจริญ">อำนาจเจริญ</option>
-                    <option value="อุดรธานี">อุดรธานี</option>
-                    <option value="อุตรดิตถ์">อุตรดิตถ์</option>
-                    <option value="อุทัยธานี">อุทัยธานี</option>
-                    <option value="อุบลราชธานี">อุบลราชธานี</option>
-                </select>
-            </div>
-            
-            <!-- Field 5: Destination Province -->
-            <div class="form-group relative">
-                <label for="destination" class="block text-sm font-medium text-gray-600 mb-1">ปลายทาง (จังหวัด) <span class="text-red-500">*</span></label>
-                <select id="destination" name="entry.875315290" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-                    <option value="">-- เลือกจังหวัดปลายทาง --</option>
-                    <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-                    <option value="กระบี่">กระบี่</option>
-                    <option value="กาญจนบุรี">กาญจนบุรี</option>
-                    <option value="กาฬสินธุ์">กาฬสินธุ์</option>
-                    <option value="กำแพงเพชร">กำแพงเพชร</option>
-                    <option value="ขอนแก่น">ขอนแก่น</option>
-                    <option value="จันทบุรี">จันทบุรี</option>
-                    <option value="ฉะเชิงเทรา">ฉะเชิงเทรา</option>
-                    <option value="ชลบุรี">ชลบุรี</option>
-                    <option value="ชัยนาท">ชัยนาท</option>
-                    <option value="ชัยภูมิ">ชัยภูมิ</option>
-                    <option value="ชุมพร">ชุมพร</option>
-                    <option value="เชียงราย">เชียงราย</option>
-                    <option value="เชียงใหม่">เชียงใหม่</option>
-                    <option value="ตรัง">ตรัง</option>
-                    <option value="ตราด">ตราด</option>
-                    <option value="ตาก">ตาก</option>
-                    <option value="นครนายก">นครนายก</option>
-                    <option value="นครปฐม">นครปฐม</option>
-                    <option value="นครพนม">นครพนม</option>
-                    <option value="นครราชสีมา">นครราชสีมา</option>
-                    <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
-                    <option value="นครสวรรค์">นครสวรรค์</option>
-                    <option value="นนทบุรี">นนทบุรี</option>
-                    <option value="นราธิวาส">นราธิวาส</option>
-                    <option value="น่าน">น่าน</option>
-                    <option value="บึงกาฬ">บึงกาฬ</option>
-                    <option value="บุรีรัมย์">บุรีรัมย์</option>
-                    <option value="ปทุมธานี">ปทุมธานี</option>
-                    <option value="ประจวบคีรีขันธ์">ประจวบคีรีขันธ์</option>
-                    <option value="ปราจีนบุรี">ปราจีนบุรี</option>
-                    <option value="ปัตตานี">ปัตตานี</option>
-                    <option value="พระนครศรีอยุธยา">พระนครศรีอยุธยา</option>
-                    <option value="พะเยา">พะเยา</option>
-                    <option value="พังงา">พังงา</option>
-                    <option value="พัทลุง">พัทลุง</option>
-                    <option value="พิจิตร">พิจิตร</option>
-                    <option value="พิษณุโลก">พิษณุโลก</option>
-                    <option value="เพชรบุรี">เพชรบุรี</option>
-                    <option value="เพชรบูรณ์">เพชรบูรณ์</option>
-                    <option value="แพร่">แพร่</option>
-                    <option value="ภูเก็ต">ภูเก็ต</option>
-                    <option value="มหาสารคาม">มหาสารคาม</option>
-                    <option value="มุกดาหาร">มุกดาหาร</option>
-                    <option value="แม่ฮ่องสอน">แม่ฮ่องสอน</option>
-                    <option value="ยโสธร">ยโสธร</option>
-                    <option value="ยะลา">ยะลา</option>
-                    <option value="ร้อยเอ็ด">ร้อยเอ็ด</option>
-                    <option value="ระนอง">ระนอง</option>
-                    <option value="ระยอง">ระยอง</option>
-                    <option value="ราชบุรี">ราชบุรี</option>
-                    <option value="ลพบุรี">ลพบุรี</option>
-                    <option value="ลำปาง">ลำปาง</option>
-                    <option value="ลำพูน">ลำพูน</option>
-                    <option value="เลย">เลย</option>
-                    <option value="ศรีสะเกษ">ศรีสะเกษ</option>
-                    <option value="สกลนคร">สกลนคร</option>
-                    <option value="สงขลา">สงขลา</option>
-                    <option value="สตูล">สตูล</option>
-                    <option value="สมุทรปราการ">สมุทรปราการ</option>
-                    <option value="สมุทรสงคราม">สมุทรสงคราม</option>
-                    <option value="สมุทรสาคร">สมุทรสาคร</option>
-                    <option value="สระแก้ว">สระแก้ว</option>
-                    <option value="สระบุรี">สระบุรี</option>
-                    <option value="สิงห์บุรี">สิงห์บุรี</option>
-                    <option value="สุโขทัย">สุโขทัย</option>
-                    <option value="สุพรรณบุรี">สุพรรณบุรี</option>
-                    <option value="สุราษฎร์ธานี">สุราษฎร์ธานี</option>
-                    <option value="สุรินทร์">สุรินทร์</option>
-                    <option value="หนองคาย">หนองคาย</option>
-                    <option value="หนองบัวลำภู">หนองบัวลำภู</option>
-                    <option value="อ่างทอง">อ่างทอง</option>
-                    <option value="อำนาจเจริญ">อำนาจเจริญ</option>
-                    <option value="อุดรธานี">อุดรธานี</option>
-                    <option value="อุตรดิตถ์">อุตรดิตถ์</option>
-                    <option value="อุทัยธานี">อุทัยธานี</option>
-                    <option value="อุบลราชธานี">อุบลราชธานี</option>
-                </select>
-            </div>
-            
-            <!-- Field 6: Vehicle Type -->
-            <div class="form-group relative">
-                <label for="vehicle" class="block text-sm font-medium text-gray-600 mb-1">ประเภทรถขนส่ง <span class="text-red-500">*</span></label>
-                <select id="vehicle" name="entry.786764570" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-                    <option value="">-- เลือกประเภทรถ --</option>
-                    <option value="4 ล้อ">4 ล้อ</option>
-                    <option value="6 ล้อ">6 ล้อ</option>
-                    <option value="10 ล้อ">10 ล้อ</option>
-                    <option value="เทรลเลอร์">เทรลเลอร์</option>
-                </select>
+             <!-- Vehicle Type Fields -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Field 6: Vehicle Type (Main) -->
+                <div class="form-group">
+                    <label for="vehicle" class="block text-gray-700 text-sm font-semibold mb-2">ประเภทรถขนส่ง (หลัก) <span class="text-red-500">*</span></label>
+                    <select id="vehicle" name="entry.1782261195" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                        <option value="">-- เลือกประเภทรถ --</option>
+                        <option value="4 ล้อ">4 ล้อ</option>
+                        <option value="6 ล้อ">6 ล้อ</option>
+                        <option value="10 ล้อ">10 ล้อ</option>
+                        <option value="เทรลเลอร์">เทรลเลอร์</option>
+                    </select>
+                </div>
+                 <!-- New Field: Vehicle Type (Sub) -->
+                <div class="form-group">
+                    <label for="vehicleSubType" class="block text-gray-700 text-sm font-semibold mb-2">ประเภทรถขนส่ง (ย่อย)</label>
+                    <select id="vehicleSubType" name="entry.1452987490" class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
+                        <option value="">-- เลือกประเภทย่อย --</option>
+                        <option value="พื้นเรียบ">พื้นเรียบ</option>
+                        <option value="คอก">คอก</option>
+                        <option value="ตู้">ตู้</option>
+                        <option value="ตู้เย็น">ตู้เย็น</option>
+                    </select>
+                </div>
             </div>
             
             <!-- Field 7: Transport Type -->
-            <div class="form-group relative">
-                <label for="transportType" class="block text-sm font-medium text-gray-600 mb-1">ประเภทการขนส่ง <span class="text-red-500">*</span></label>
-                <select id="transportType" name="entry.1268740348" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+            <div class="form-group">
+                <label for="transportType" class="block text-gray-700 text-sm font-semibold mb-2">ประเภทการขนส่ง <span class="text-red-500">*</span></label>
+                <select id="transportType" name="entry.2087744544" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200">
                     <option value="">-- เลือกประเภทการขนส่ง --</option>
                     <option value="เหมาเที่ยว">เหมาเที่ยว</option>
+                    <option value="บรรทุกตามน้ำหนัก">บรรทุกตามน้ำหนัก</option>
                     <option value="กระจายสินค้า">กระจายสินค้า</option>
                     <option value="Express">Express</option>
                     <option value="Cross border">Cross border</option>
                 </select>
             </div>
             
-            <!-- Field 8: Goods Type -->
-            <div class="form-group relative">
-                <label for="goodsType" class="block text-sm font-medium text-gray-600 mb-1">ประเภทสินค้า <span class="text-red-500">*</span></label>
-                <input type="text" id="goodsType" name="entry.1194258767" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: เฟอร์นิเจอร์, อาหารแช่แข็ง">
-            </div>
-            
-            <!-- Field 9: Weight -->
-            <div class="form-group relative">
-                <label for="weight" class="block text-sm font-medium text-gray-600 mb-1">น้ำหนักสินค้า (กิโลกรัม) <span class="text-red-500">*</span></label>
-                <input type="number" id="weight" name="entry.1274673135" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: 1,500">
+            <!-- Goods Type and Weight Fields -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Field 8: Goods Type -->
+                <div class="form-group">
+                    <label for="goodsType" class="block text-gray-700 text-sm font-semibold mb-2">ประเภทสินค้า <span class="text-red-500">*</span></label>
+                    <input type="text" id="goodsType" name="entry.847129202" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: เฟอร์นิเจอร์">
+                </div>
+                <!-- Field 9: Weight -->
+                <div class="form-group">
+                    <label for="weight" class="block text-gray-700 text-sm font-semibold mb-2">น้ำหนักสินค้า (กิโลกรัม) <span class="text-red-500">*</span></label>
+                    <input type="number" id="weight" name="entry.998871545" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: 1500">
+                </div>
             </div>
             
             <!-- Field 10: Other Details -->
-            <div class="form-group relative">
-                <label for="details" class="block text-sm font-medium text-gray-600 mb-1">รายละเอียดอื่นๆ (ถ้ามี)</label>
-                <textarea id="details" name="entry.543114893" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: สินค้าต้องใช้รถควบคุมอุณหภูมิ"></textarea>
+            <div class="form-group">
+                <label for="details" class="block text-gray-700 text-sm font-semibold mb-2">รายละเอียดอื่นๆ (ถ้ามี)</label>
+                <textarea id="details" name="entry.703953707" rows="4" class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: สินค้าต้องใช้รถควบคุมอุณหภูมิ"></textarea>
             </div>
             
             <!-- Field 11: Price -->
-            <div class="form-group relative">
-                <label for="price" class="block text-sm font-medium text-gray-600 mb-1">ราคาค่าขนส่ง (บาท) <span class="text-red-500">*</span></label>
-                <input type="number" id="price" name="entry.897468739" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="ตัวอย่าง: 5000">
+            <div class="form-group">
+                <label for="price" class="block text-gray-700 text-sm font-semibold mb-2">ราคาค่าขนส่ง (บาท) <span class="text-red-500">*</span></label>
+                <input type="number" id="price" name="entry.1736074666" required class="shadow-inner appearance-none border-2 border-gray-200 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-400 transition-all duration-200" placeholder="ตัวอย่าง: 5000">
             </div>
             
             <!-- Submit button -->
-            <button type="submit" id="submitButton" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-lg shadow-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors duration-300">
-                ส่งข้อมูลงานด่วน
-            </button>
+            <div class="pt-4">
+                <button type="submit" id="submitButton" class="w-full py-3 px-10 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-full shadow-lg hover:from-emerald-600 hover:to-green-700 transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50">
+                    ส่งข้อมูลงานด่วน
+                </button>
+            </div>
         </form>
     </div>
 
     <script>
-        document.getElementById('urgentJobForm').addEventListener('submit', async function(event) {
-            // Prevent the default form submission that navigates to a new page
-            event.preventDefault();
+        // --- Data for provinces and districts ---
+        const thailandData = { "กรุงเทพมหานคร": ["พระนคร", "ดุสิต", "หนองจอก", "บางรัก", "บางเขน", "บางกะปิ", "ปทุมวัน", "ป้อมปราบศัตรูพ่าย", "พระโขนง", "มีนบุรี", "ลาดกระบัง", "ยานนาวา", "สัมพันธวงศ์", "พญาไท", "ธนบุรี", "บางกอกใหญ่", "ห้วยขวาง", "คลองสาน", "ตลิ่งชัน", "บางกอกน้อย", "บางขุนเทียน", "ภาษีเจริญ", "หนองแขม", "ราษฎร์บูรณะ", "บางพลัด", "ดินแดง", "บึงกุ่ม", "สาทร", "บางซื่อ", "จตุจักร", "บางคอแหลม", "ประเวศ", "คลองเตย", "สวนหลวง", "ลาดพร้าว", "วัฒนา", "บางแค", "หลักสี่", "สายไหม", "คันนายาว", "สะพานสูง", "วังทองหลาง", "คลองสามวา", "บางนา", "ทวีวัฒนา", "ทุ่งครุ", "บางบอน"], "กระบี่": ["เมืองกระบี่", "เขาพนม", "เกาะลันตา", "คลองท่อม", "อ่าวลึก", "ปลายพระยา", "ลำทับ", "เหนือคลอง"], "กาญจนบุรี": ["เมืองกาญจนบุรี", "ไทรโยค", "บ่อพลอย", "ศรีสวัสดิ์", "ท่ามะกา", "ท่าม่วง", "ทองผาภูมิ", "สังขละบุรี", "พนมทวน", "เลาขวัญ", "ด่านมะขามเตี้ย", "หนองปรือ", "ห้วยกระเจา"], "กาฬสินธุ์": ["เมืองกาฬสินธุ์", "นามน", "กมลาไสย", "ร่องคำ", "กุฉินารายณ์", "เขาวง", "ยางตลาด", "ห้วยเม็ก", "สหัสขันธ์", "คำม่วง", "ท่าคันโท", "หนองกุงศรี", "สมเด็จ", "ห้วยผึ้ง", "สามชัย", "นาคู", "ดอนจาน", "ฆ้องชัย"], "กำแพงเพชร": ["เมืองกำแพงเพชร", "ไทรงาม", "คลองลาน", "ขาณุวรลักษบุรี", "คลองขลุง", "พรานกระต่าย", "ลานกระบือ", "ทรายทองวัฒนา", "ปางศิลาทอง", "บึงสามัคคี", "โกสัมพีนคร"], "ขอนแก่น": ["เมืองขอนแก่น", "บ้านฝาง", "พระยืน", "หนองเรือ", "ชุมแพ", "สีชมพู", "น้ำพอง", "อุบลรัตน์", "กระนวน", "บ้านไผ่", "เปือยน้อย", "พล", "แวงใหญ่", "แวงน้อย", "หนองสองห้อง", "ภูเวียง", "มัญจาคีรี", "หนองนาคำ", "ซำสูง", "โคกโพธิ์ไชย", "ภูผาม่าน", "ชนบท", "บ้านแฮด", "โนนศิลา", "เวียงเก่า", "หนองแก"], "จันทบุรี": ["เมืองจันทบุรี", "ขลุง", "ท่าใหม่", "โป่งน้ำร้อน", "มะขาม", "แหลมสิงห์", "สอยดาว", "แก่งหางแมว", "นายายอาม", "เขาคิชฌกูฏ"], "ฉะเชิงเทรา": ["เมืองฉะเชิงเทรา", "บางคล้า", "บางน้ำเปรี้ยว", "บางปะกง", "บ้านโพธิ์", "พนมสารคาม", "ราชสาส์น", "สนามชัยเขต", "แปลงยาว", "ท่าตะเกียบ", "คลองเขื่อน"], "ชลบุรี": ["เมืองชลบุรี", "บ้านบึง", "หนองใหญ่", "บางละมุง", "พานทอง", "พนัสนิคม", "ศรีราชา", "เกาะสีชัง", "สัตหีบ", "บ่อทอง", "เกาะจันทร์"], "ชัยนาท": ["เมืองชัยนาท", "มโนรมย์", "วัดสิงห์", "สรรพยา", "สรรคบุรี", "หันคา", "หนองมะโมง", "เนินขาม"], "ชัยภูมิ": ["เมืองชัยภูมิ", "บ้านเขว้า", "คอนสวรรค์", "เกษตรสมบูรณ์", "หนองบัวแดง", "จัตุรัส", "บำเหน็จณรงค์", "หนองบัวระเหว", "เทพสถิต", "ภูเขียว", "บ้านแท่น", "แก้งคร้อ", "คอนสาร", "ภักดีชุมพล", "เนินสง่า", "ซับใหญ่"], "ชุมพร": ["เมืองชุมพร", "ท่าแซะ", "ปะทิว", "หลังสวน", "ละแม", "พะโต๊ะ", "สวี", "ทุ่งตะโก"], "เชียงราย": ["เมืองเชียงราย", "เวียงชัย", "เชียงของ", "เทิง", "พาน", "ป่าแดด", "แม่จัน", "เชียงแสน", "แม่สาย", "แม่สรวย", "เวียงป่าเป้า", "พญาเม็งราย", "เวียงแก่น", "ขุนตาล", "แม่ฟ้าหลวง", "แม่ลาว", "เวียงเชียงรุ้ง", "ดอยหลวง"], "เชียงใหม่": ["เมืองเชียงใหม่", "จอมทอง", "แม่แจ่ม", "เชียงดาว", "ดอยสะเก็ด", "แม่แตง", "แม่ริม", "สะเมิง", "ฝาง", "แม่อาย", "พร้าว", "สันป่าตอง", "สันกำแพง", "สันทราย", "หางดง", "ฮอด", "ดอยเต่า", "อมก๋อย", "สารภี", "เวียงแหง", "ไชยปราการ", "แม่วาง", "แม่ออน", "ดอยหล่อ", "กัลยาณิวัฒนา"], "ตรัง": ["เมืองตรัง", "กันตัง", "ย่านตาขาว", "ปะเหลียน", "สิเกา", "ห้วยยอด", "วังวิเศษ", "นาโยง", "รัษฎา", "หาดสำราญ"], "ตราด": ["เมืองตราด", "คลองใหญ่", "เขาสมิง", "บ่อไร่", "แหลมงอบ", "เกาะกูด", "เกาะช้าง"], "ตาก": ["เมืองตาก", "บ้านตาก", "สามเงา", "แม่ระมาด", "ท่าสองยาง", "แม่สอด", "พบพระ", "อุ้มผาง", "วังเจ้า"], "นครนายก": ["เมืองนครนายก", "ปากพลี", "บ้านนา", "องครักษ์"], "นครปฐม": ["เมืองนครปฐม", "กำแพงแสน", "นครชัยศรี", "ดอนตูม", "บางเลน", "สามพราน", "พุทธมณฑล"], "นครพนม": ["เมืองนครพนม", "ปลาปาก", "ท่าอุเทน", "บ้านแพง", "ธาตุพนม", "เรณูนคร", "นาแก", "ศรีสงคราม", "นาหว้า", "โพนสวรรค์", "นาทม", "วังยาง"], "นครราชสีมา": ["เมืองนครราชสีมา", "ครบุรี", "โชคชัย", "จักราช", "โนนแดง", "โนนสูง", "โนนไทย", "ปากช่อง", "พิมาย", "สีคิ้ว", "สูงเนิน", "บัวใหญ่", "ประทาย", "ปักธงชัย", "ห้วยแถลง", "ชุมพวง", "ด่านขุนทด", "ขามทะเลสอ", "ขามสะแกแสง", "คง", "พระทองคำ", "เมืองยาง", "ลำทะเมนชัย", "วังน้ำเขียว", "เฉลิมพระเกียรติ", "เทพารักษ์", "บ้านเหลื่อม", "สีดา", "บัวลาย", "แก้งสนามนาง", "หนองบุญมาก", "เสิงสาง"], "นครศรีธรรมราช": ["เมืองนครศรีธรรมราช", "พรหมคีรี", "ลานสกา", "ฉวาง", "พิปูน", "เชียรใหญ่", "ชะอวด", "ท่าศาลา", "ทุ่งสง", "นาบอน", "ทุ่งใหญ่", "ปากพนัง", "ร่อนพิบูลย์", "สิชล", "ขนอม", "หัวไทร", "บางขัน", "ถ้ำพรรณรา", "จุฬาภรณ์", "พระพรหม", "นบพิตำ", "ช้างกลาง", "เฉลิมพระเกียรติ"], "นครสวรรค์": ["เมืองนครสวรรค์", "โกรกพระ", "ชุมแสง", "หนองบัว", "บรรพตพิสัย", "เก้าเลี้ยว", "ตาคลี", "ท่าตะโก", "ไพศาลี", "พยุหะคีรี", "ลาดยาว", "ตากฟ้า", "แม่วงก์", "แม่เปิน", "ชุมตาบง"], "นนทบุรี": ["เมืองนนทบุรี", "บางกรวย", "บางใหญ่", "บางบัวทอง", "ไทรน้อย", "ปากเกร็ด"], "นราธิวาส": ["เมืองนราธิวาส", "ตากใบ", "บาเจาะ", "ยี่งอ", "ระแงะ", "รือเสาะ", "ศรีสาคร", "แว้ง", "สุคิริน", "สุไหงโก-ลก", "สุไหงปาดี", "จะแนะ", "เจาะไอร้อง"], "น่าน": ["เมืองน่าน", "แม่จริม", "บ้านหลวง", "นาน้อย", "ปัว", "ท่าวังผา", "เวียงสา", "ทุ่งช้าง", "เชียงกลาง", "นาหมื่น", "สันติสุข", "บ่อเกลือ", "สองแคว", "ภูเพียง", "เฉลิมพระเกียรติ"], "บึงกาฬ": ["เมืองบึงกาฬ", "พรเจริญ", "โซ่พิสัย", "เซกา", "ปากคาด", "บึงโขงหลง", "ศรีวิไล", "บุ่งคล้า"], "บุรีรัมย์": ["เมืองบุรีรัมย์", "คูเมือง", "กระสัง", "นางรอง", "หนองกี่", "ละหานทราย", "ประโคนชัย", "บ้านกรวด", "พุทไธสง", "ลำปลายมาศ", "สตึก", "ปะคำ", "นาโพธิ์", "หนองหงส์", "พลับพลาชัย", "ห้วยราช", "โนนสุวรรณ", "ชำนิ", "โนนดินแดง", "บ้านใหม่ไชยพจน์", "บ้านด่าน", "แคนดง", "เฉลิมพระเกียรติ"], "ปทุมธานี": ["เมืองปทุมธานี", "คลองหลวง", "ธัญบุรี", "หนองเสือ", "ลาดหลุมแก้ว", "ลำลูกกา", "สามโคก"], "ประจวบคีรีขันธ์": ["เมืองประจวบคีรีขันธ์", "กุยบุรี", "ทับสะแก", "บางสะพาน", "บางสะพานน้อย", "ปราณบุรี", "หัวหิน", "สามร้อยยอด"], "ปราจีนบุรี": ["เมืองปราจีนบุรี", "กบินทร์บุรี", "นาดี", "บ้านสร้าง", "ประจันตคาม", "ศรีมหาโพธิ", "ศรีมโหสถ"], "ปัตตานี": ["เมืองปัตตานี", "โคกโพธิ์", "หนองจิก", "ปะนาเระ", "มายอ", "ทุ่งยางแดง", "สายบุรี", "ไม้แก่น", "ยะหริ่ง", "ยะรัง", "กะพ้อ", "แม่ลาน"], "พระนครศรีอยุธยา": ["พระนครศรีอยุธยา", "ท่าเรือ", "นครหลวง", "บางไทร", "บางบาล", "บางปะอิน", "บางปะหัน", "ผักไห่", "ภาชี", "ลาดบัวหลวง", "วังน้อย", "เสนา", "บางซ้าย", "อุทัย", "มหาราช", "บ้านแพรก"], "พะเยา": ["เมืองพะเยา", "จุน", "เชียงคำ", "เชียงม่วน", "ดอกคำใต้", "ปง", "แม่ใจ", "ภูซาง", "ภูกามยาว"], "พังงา": ["เมืองพังงา", "เกาะยาว", "กะปง", "คุระบุรี", "ทับปุด", "ตะกั่วทุ่ง", "ตะกั่วป่า", "ท้ายเหมือง"], "พัทลุง": ["เมืองพัทลุง", "กงหรา", "เขาชัยสน", "ตะโหมด", "ควนขนุน", "ปากพะยูน", "ศรีบรรพต", "ป่าบอน", "บางแก้ว", "ป่าพะยอม", "ศรีนครินทร์"], "พิจิตร": ["เมืองพิจิตร", "วังทรายพูน", "โพธิ์ประทับช้าง", "ตะพานหิน", "บางมูลนาก", "โพทะเล", "สามง่าม", "ทับคล้อ", "สากเหล็ก", "บึงนาราง", "ดงเจริญ", "วชิรบารมี"], "พิษณุโลก": ["เมืองพิษณุโลก", "นครไทย", "ชาติตระการ", "บางระกำ", "บางกระทุ่ม", "พรหมพิราม", "วัดโบสถ์", "วังทอง", "เนินมะปราง"], "เพชรบุรี": ["เมืองเพชรบุรี", "เขาย้อย", "หนองหญ้าปล้อง", "ชะอำ", "ท่ายาง", "บ้านลาด", "บ้านแหลม", "แก่งกระจาน"], "เพชรบูรณ์": ["เมืองเพชรบูรณ์", "ชนแดน", "หล่มสัก", "หล่มเก่า", "วิเชียรบุรี", "ศรีเทพ", "หนองไผ่", "บึงสามพัน", "น้ำหนาว", "วังโป่ง", "เขาค้อ"], "แพร่": ["เมืองแพร่", "ร้องกวาง", "ลอง", "สูงเม่น", "เด่นชัย", "สอง", "วังชิ้น", "หนองม่วงไข่"], "ภูเก็ต": ["เมืองภูเก็ต", "กะทู้", "ถลาง"], "มหาสารคาม": ["เมืองมหาสารคาม", "แกดำ", "โกสุมพิสัย", "กันทรวิชัย", "เชียงยืน", "บรบือ", "นาเชือก", "พยัคฆภูมิพิสัย", "วาปีปทุม", "นาดูน", "ยางสีสุราช", "กุดรัง", "ชื่นชม"], "มุกดาหาร": ["เมืองมุกดาหาร", "นิคมคำสร้อย", "ดอนตาล", "ดงหลวง", "คำชะอี", "หว้านใหญ่", "หนองสูง"], "แม่ฮ่องสอน": ["เมืองแม่ฮ่องสอน", "ขุนยวม", "ปาย", "แม่สะเรียง", "แม่ลาน้อย", "สบเมย", "ปางมะผ้า"], "ยโสธร": ["เมืองยโสธร", "ทรายมูล", "กุดชุม", "คำเขื่อนแก้ว", "ป่าติ้ว", "มหาชนะชัย", "ค้อวัง", "เลิงนกทา", "ไทยเจริญ"], "ยะลา": ["เมืองยะลา", "เบตง", "บันนังสตา", "ธารโต", "ยะหา", "รามัน", "กาบัง", "กรงปินัง"], "ร้อยเอ็ด": ["เมืองร้อยเอ็ด", "เกษตรวิสัย", "ปทุมรัตต์", "จตุรพักตรพิมาน", "ธวัชบุรี", "พนมไพร", "โพนทอง", "โพธิ์ชัย", "หนองพอก", "เสลภูมิ", "สุวรรณภูมิ", "เมืองสรวง", "โพนทราย", "อาจสามารถ", "เมยวดี", "ศรีสมเด็จ", "จังหาร", "เชียงขวัญ", "หนองฮี", "ทุ่งเขาหลวง"], "ระนอง": ["เมืองระนอง", "ละอุ่น", "กะเปอร์", "กระบุรี", "สุขสำราญ"], "ระยอง": ["เมืองระยอง", "บ้านฉาง", "แกลง", "วังจันทร์", "บ้านค่าย", "ปลวกแดง", "เขาชะเมา", "นิคมพัฒนา"], "ราชบุรี": ["เมืองราชบุรี", "จอมบึง", "สวนผึ้ง", "ดำเนินสะดวก", "บ้านโป่ง", "บางแพ", "โพธาราม", "ปากท่อ", "วัดเพลง", "บ้านคา"], "ลพบุรี": ["เมืองลพบุรี", "พัฒนานิคม", "โคกสำโรง", "ชัยบาดาล", "ท่าวุ้ง", "บ้านหมี่", "ท่าหลวง", "สระโบสถ์", "โคกเจริญ", "ลำสนธิ", "หนองม่วง"], "ลำปาง": ["เมืองลำปาง", "แม่เมาะ", "เกาะคา", "เสริมงาม", "งาว", "แจ้ห่ม", "วังเหนือ", "เถิน", "แม่พริก", "แม่ทะ", "สบปราบ", "ห้างฉัตร", "เมืองปาน"], "ลำพูน": ["เมืองลำพูน", "แม่ทา", "บ้านโฮ่ง", "ลี้", "ทุ่งหัวช้าง", "ป่าซาง", "บ้านธิ", "เวียงหนองล่อง"], "เลย": ["เมืองเลย", "นาด้วง", "เชียงคาน", "ปากชม", "ด่านซ้าย", "นาแห้ว", "ภูเรือ", "ท่าลี่", "วังสะพุง", "ภูกระดึง", "ภูหลวง", "ผาขาว", "เอราวัณ", "หนองหิน"], "ศรีสะเกษ": ["เมืองศรีสะเกษ", "ยางชุมน้อย", "กันทรารมย์", "กันทรลักษ์", "ขุขันธ์", "ไพรบึง", "ปรางค์กู่", "ขุนหาญ", "ราษีไศล", "อุทุมพรพิสัย", "บึงบูรพ์", "ห้วยทับทัน", "โนนคูณ", "ศรีรัตนะ", "น้ำเกลี้ยง", "วังหิน", "ภูสิงห์", "เมืองจันทร์", "เบญจลักษ์", "พยุห์", "โพธิ์ศรีสุวรรณ", "ศิลาลาด"], "สกลนคร": ["เมืองสกลนคร", "กุสุมาลย์", "กุดบาก", "พรรณานิคม", "พังโคน", "วาริชภูมิ", "นิคมน้ำอูน", "วานรนิวาส", "คำตากล้า", "บ้านม่วง", "อากาศอำนวย", "สว่างแดนดิน", "ส่องดาว", "เต่างอย", "โคกศรีสุพรรณ", "เจริญศิลป์", "โพนนาแก้ว", "ภูพาน"], "สงขลา": ["เมืองสงขลา", "สทิงพระ", "จะนะ", "นาทวี", "เทพา", "สะบ้าย้อย", "ระโนด", "กระแสสินธุ์", "รัตภูมิ", "สะเดา", "หาดใหญ่", "นาหม่อม", "ควนเนียง", "บางกล่ำ", "สิงหนคร", "คลองหอยโข่ง"], "สตูล": ["เมืองสตูล", "ควนโดน", "ควนกาหลง", "ท่าแพ", "ละงู", "ทุ่งหว้า", "มะนัง"], "สมุทรปราการ": ["เมืองสมุทรปราการ", "บางบ่อ", "บางพลี", "พระประแดง", "พระสมุทรเจดีย์", "บางเสาธง"], "สมุทรสงคราม": ["เมืองสมุทรสงคราม", "บางคนที", "อัมพวา"], "สมุทรสาคร": ["เมืองสมุทรสาคร", "กระทุ่มแบน", "บ้านแพ้ว"], "สระแก้ว": ["เมืองสระแก้ว", "คลองหาด", "ตาพระยา", "วังน้ำเย็น", "วัฒนานคร", "อรัญประเทศ", "เขาฉกรรจ์", "โคกสูง", "วังสมบูรณ์"], "สระบุรี": ["เมืองสระบุรี", "แก่งคอย", "หนองแค", "วิหารแดง", "หนองแซง", "บ้านหมอ", "ดอนพุด", "หนองโดน", "พระพุทธบาท", "เสาไห้", "มวกเหล็ก", "วังม่วง", "เฉลิมพระเกียรติ"], "สิงห์บุรี": ["เมืองสิงห์บุรี", "บางระจัน", "ค่ายบางระจัน", "พรหมบุรี", "ท่าช้าง", "อินทร์บุรี"], "สุโขทัย": ["เมืองสุโขทัย", "บ้านด่านลานหอย", "คีรีมาศ", "กงไกรลาศ", "ศรีสัชนาลัย", "ศรีสำโรง", "สวรรคโลก", "ศรีนคร", "ทุ่งเสลี่ยม"], "สุพรรณบุรี": ["เมืองสุพรรณบุรี", "เดิมบางนางบวช", "ด่านช้าง", "บางปลาม้า", "ศรีประจันต์", "ดอนเจดีย์", "สองพี่น้อง", "สามชุก", "อู่ทอง", "หนองหญ้าไซ"], "สุราษฎร์ธานี": ["เมืองสุราษฎร์ธานี", "กาญจนดิษฐ์", "ดอนสัก", "เกาะสมุย", "เกาะพะงัน", "ไชยา", "ท่าชนะ", "คีรีรัฐนิคม", "บ้านตาขุน", "พนม", "ท่าฉาง", "บ้านนาสาร", "บ้านนาเดิม", "เคียนซา", "เวียงสระ", "พระแสง", "พุนพิน", "ชัยบุรี", "วิภาวดี"], "สุรินทร์": ["เมืองสุรินทร์", "ชุมพลบุรี", "ท่าตูม", "จอมพระ", "ปราสาท", "กาบเชิง", "รัตนบุรี", "สนม", "ศีขรภูมิ", "สังขะ", "ลำดวน", "สำโรงทาบ", "บัวเชด", "พนมดงรัก", "ศรีณรงค์", "เขวาสินรินทร์", "โนนนารายณ์"], "หนองคาย": ["เมืองหนองคาย", "ท่าบ่อ", "ศรีเชียงใหม่", "สังคม", "โพนพิสัย", "เฝ้าไร่", "รัตนวาปี", "โพธิ์ตาก", "สระใคร"], "หนองบัวลำภู": ["เมืองหนองบัวลำภู", "นากลาง", "โนนสัง", "ศรีบุญเรือง", "สุวรรณคูหา", "นาวัง"], "อ่างทอง": ["เมืองอ่างทอง", "ไชโย", "ป่าโมก", "โพธิ์ทอง", "แสวงหา", "วิเศษชัยชาญ", "สามโก้"], "อำนาจเจริญ": ["เมืองอำนาจเจริญ", "ชานุมาน", "ปทุมราชวงศา", "พนา", "เสนางคนิคม", "หัวตะพาน", "ลืออำนาจ"], "อุดรธานี": ["เมืองอุดรธานี", "กุดจับ", "หนองวัวซอ", "กุมภวาปี", "โนนสะอาด", "หนองหาน", "ทุ่งฝน", "ไชยวาน", "ศรีธาตุ", "วังสามหมอ", "บ้านดุง", "บ้านผือ", "น้ำโสม", "เพ็ญ", "สร้างคอม", "หนองแสง", "นายูง", "พิบูลย์รักษ์", "กู่แก้ว", "ประจักษ์ศิลปาคม"], "อุตรดิตถ์": ["เมืองอุตรดิตถ์", "ตรอน", "ท่าปลา", "น้ำปาด", "ฟากท่า", "บ้านโคก", "พิชัย", "ลับแล", "ทองแสนขัน"], "อุทัยธานี": ["เมืองอุทัยธานี", "ทัพทัน", "สว่างอารมณ์", "หนองฉาง", "หนองขาหย่าง", "บ้านไร่", "ลานสัก", "ห้วยคต"], "อุบลราชธานี": ["เมืองอุบลราชธานี", "ศรีเมืองใหม่", "โขงเจียม", "เขื่องใน", "เขมราฐ", "เดชอุดม", "นาจะหลวย", "น้ำยืน", "บุณฑริก", "ตระการพืชผล", "กุดข้าวปุ้น", "ม่วงสาม십", "วารินชำราบ", "พิบูลมังสาหาร", "ตาลสุม", "โพธิ์ไทร", "สำโรง", "ดอนมดแดง", "สิรินธร", "ทุ่งศรีอุดม", "นาเยีย", "นาตาล", "เหล่าเสือโก้ก", "สว่างวีระวงศ์", "น้ำขุ่น"] };
+        const provinces = Object.keys(thailandData);
 
-            const form = event.target;
-            const statusMessage = document.getElementById('statusMessage');
-            const submitButton = document.getElementById('submitButton');
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Get DOM Elements ---
+            const originSelect = document.getElementById('origin');
+            const originDistrictSelect = document.getElementById('originDistrict');
+            const destinationSelect = document.getElementById('destination');
+            const destinationDistrictSelect = document.getElementById('destinationDistrict');
 
-            // Show a loading message and disable the button
-            statusMessage.textContent = 'กำลังส่งข้อมูล... โปรดรอสักครู่';
-            statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-gray-100 text-gray-600';
-            statusMessage.style.display = 'block';
-            submitButton.disabled = true;
-
-            try {
-                // Collect form data
-                const formData = new URLSearchParams();
-                for (const pair of new FormData(form).entries()) {
-                    formData.append(pair[0], pair[1]);
-                }
-
-                // Make the POST request to the Google Forms endpoint
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors' // Use 'no-cors' to avoid CORS issues with Google Forms
+            // --- Populate Province Dropdowns ---
+            function populateProvinces(selectElement) {
+                provinces.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province;
+                    option.textContent = province;
+                    selectElement.appendChild(option);
                 });
-
-                // Check for a successful response (even with no-cors, we can check a simple success)
-                if (response.ok || response.type === 'opaque') {
-                    statusMessage.textContent = 'ส่งข้อมูลสำเร็จแล้ว! ขอบคุณที่ใช้บริการ';
-                    statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-green-100 text-green-700';
-                    form.reset(); // Reset the form after successful submission
-                } else {
-                    statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
-                    statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-red-100 text-red-700';
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต';
-                statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-red-100 text-red-700';
-            } finally {
-                submitButton.disabled = false;
             }
+            populateProvinces(originSelect);
+            populateProvinces(destinationSelect);
+
+
+            // --- Event Listener for Province Change ---
+            function handleProvinceChange(provinceSelect, districtSelect) {
+                const selectedProvince = provinceSelect.value;
+                
+                // Clear and disable district dropdown
+                districtSelect.innerHTML = '<option value="">-- เลือกเขต/อำเภอ --</option>';
+                districtSelect.disabled = true;
+                districtSelect.classList.add('disabled:bg-gray-100');
+
+
+                if (selectedProvince && thailandData[selectedProvince]) {
+                    const districts = thailandData[selectedProvince];
+                    districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtSelect.appendChild(option);
+                    });
+                    // Enable district dropdown
+                    districtSelect.disabled = false;
+                    districtSelect.classList.remove('disabled:bg-gray-100');
+                }
+            }
+
+            originSelect.addEventListener('change', () => handleProvinceChange(originSelect, originDistrictSelect));
+            destinationSelect.addEventListener('change', () => handleProvinceChange(destinationSelect, destinationDistrictSelect));
+
+            // --- Form Submission Logic ---
+            document.getElementById('urgentJobForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const statusMessage = document.getElementById('statusMessage');
+                const submitButton = document.getElementById('submitButton');
+
+                statusMessage.textContent = 'กำลังส่งข้อมูล... โปรดรอสักครู่';
+                statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-gray-100 text-gray-600';
+                statusMessage.style.display = 'block';
+                submitButton.disabled = true;
+
+                try {
+                    const formData = new URLSearchParams();
+                    for (const pair of new FormData(form).entries()) {
+                        formData.append(pair[0], pair[1]);
+                    }
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors'
+                    });
+
+                    if (response.ok || response.type === 'opaque') {
+                        statusMessage.textContent = 'ส่งข้อมูลสำเร็จแล้ว! ขอบคุณที่ใช้บริการ';
+                        statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-green-100 text-green-700';
+                        form.reset();
+                        // Reset district dropdowns
+                        handleProvinceChange(originSelect, originDistrictSelect);
+                        handleProvinceChange(destinationSelect, destinationDistrictSelect);
+                    } else {
+                        statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
+                        statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-red-100 text-red-700';
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต';
+                    statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-red-100 text-red-700';
+                } finally {
+                    submitButton.disabled = false;
+                }
+            });
         });
     </script>
 
 </body>
 </html>
-
-
-
-
