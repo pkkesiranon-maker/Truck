@@ -23,7 +23,7 @@
 <body class="bg-gradient-to-br from-green-50 to-emerald-100 flex justify-center items-center min-h-screen py-12 px-4 antialiased">
 
     <!-- Main form container -->
-    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-2xl animate-fade-in">
+    <div id="formContainer" class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-2xl animate-fade-in">
         <div class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-extrabold text-green-800 mb-2">ฝากโพสต์งานด่วน</h1>
             <p class="text-lg md:text-xl font-semibold text-green-700">ฝากหารถกับบริษัท เอส เอส แอล โลจิสติกส์ ได้ที่นี่</p>
@@ -171,6 +171,13 @@
             </div>
         </form>
     </div>
+    
+    <!-- Success Message Container -->
+    <div id="successMessageContainer" class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-2xl animate-fade-in text-center hidden">
+        <h1 class="text-2xl md:text-3xl font-bold text-green-700 mb-4">ส่งข้อมูลงานด่วนสำเร็จแล้ว ขอบคุณที่ใช้บริการ</h1>
+        <p class="text-lg text-gray-600">บริษัทฯ ดำเนินการหารถให้ท่าน และติดต่อกลับโดยเร็วที่สุด</p>
+    </div>
+
 
     <script>
         // --- Data for provinces and districts ---
@@ -183,6 +190,9 @@
             const originDistrictSelect = document.getElementById('originDistrict');
             const destinationSelect = document.getElementById('destination');
             const destinationDistrictSelect = document.getElementById('destinationDistrict');
+            const formContainer = document.getElementById('formContainer');
+            const successMessageContainer = document.getElementById('successMessageContainer');
+
 
             // --- Populate Province Dropdowns ---
             function populateProvinces(selectElement) {
@@ -250,12 +260,9 @@
                     });
 
                     if (response.ok || response.type === 'opaque') {
-                        statusMessage.textContent = 'ส่งข้อมูลสำเร็จแล้ว! ขอบคุณที่ใช้บริการ';
-                        statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-green-100 text-green-700';
-                        form.reset();
-                        // Reset district dropdowns
-                        handleProvinceChange(originSelect, originDistrictSelect);
-                        handleProvinceChange(destinationSelect, destinationDistrictSelect);
+                        // On success, hide form and show success message
+                        formContainer.style.display = 'none';
+                        successMessageContainer.style.display = 'block';
                     } else {
                         statusMessage.textContent = 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง';
                         statusMessage.className = 'p-4 rounded-lg text-center mb-6 font-semibold bg-red-100 text-red-700';
@@ -273,3 +280,4 @@
 
 </body>
 </html>
+
